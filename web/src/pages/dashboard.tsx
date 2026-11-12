@@ -5,8 +5,8 @@ import { useAuth } from '@/features/auth/use-auth'
 import { APP_SHELL_PAGE_CLASS_NAME } from '@/app/page-shell-style'
 import { DashboardPageHeader } from '@/shared/components/dashboard-page-header'
 import {
-  Star, Heart, Package, Boxes, Key, Shield, Flag, Globe,
-  UserCog, Lock, Bell, Clock, ChevronDown, ChevronRight, Github,
+  Star, Heart, Package, Boxes, Key, Shield, Flag, Globe, Puzzle,
+  UserCog, Lock, Bell, Clock, ChevronDown, ChevronRight, Pencil, Wrench, LayoutGrid, BookOpen, FileText, Blocks,
 } from 'lucide-react'
 
 /**
@@ -22,7 +22,6 @@ interface SidebarItem {
   label: string
   to: string
   analyticsId?: string
-  review?: boolean
   admin?: boolean
   superAdmin?: boolean
   passwordCapability?: boolean
@@ -48,6 +47,8 @@ export const SIDEBAR_GROUPS: SidebarGroup[] = [
     items: [
       { key: 'skills', icon: Package, label: 'sidebar.mySkills', to: '/dashboard/skills', analyticsId: 'navigation.owned.skills' },
       { key: 'suites', icon: Boxes, label: 'sidebar.mySuites', to: '/dashboard/suites', analyticsId: 'navigation.owned.suites' },
+      { key: 'plugins', icon: Puzzle, label: 'sidebar.myPlugins', to: '/dashboard/plugins', analyticsId: 'navigation.owned.plugins' },
+      { key: 'mcp', icon: Blocks, label: 'mcp.myMcp', to: '/dashboard/mcp', analyticsId: 'navigation.owned.mcp' },
       { key: 'namespaces', icon: Globe, label: 'sidebar.namespaces', to: '/dashboard/namespaces', analyticsId: 'namespace.list.open' },
       { key: 'stars', icon: Star, label: 'sidebar.stars', to: '/dashboard/stars', analyticsId: 'navigation.starred.open' },
       { key: 'subscriptions', icon: Heart, label: 'sidebar.subscriptions', to: '/dashboard/subscriptions', analyticsId: 'navigation.subscriptions.open' },
@@ -58,9 +59,13 @@ export const SIDEBAR_GROUPS: SidebarGroup[] = [
   {
     label: 'sidebar.admin',
     items: [
-      { key: 'reviewCenter', icon: Shield, label: 'reviewCenter.title', to: '/dashboard/reviews', analyticsId: 'review.queue.open', review: true },
-      { key: 'governance', icon: Flag, label: 'sidebar.governance', to: '/dashboard/governance', analyticsId: 'governance.center.open', admin: true },
-      { key: 'githubSync', icon: Github, label: 'sidebar.githubSync', to: '/dashboard/github-sync', analyticsId: 'github.sync.open', superAdmin: true },
+      { key: 'governance', icon: Shield, label: 'sidebar.governance', to: '/dashboard/governance', analyticsId: 'governance.center.open', admin: true },
+      { key: 'reports', icon: Flag, label: 'sidebar.reports', to: '/dashboard/reports', analyticsId: 'report.queue.open', admin: true },
+      { key: 'homeContent', icon: Pencil, label: 'homeContent.nav', to: '/dashboard/home-content', analyticsId: 'navigation.homecontent.open', superAdmin: true },
+      { key: 'appsAdmin', icon: LayoutGrid, label: 'apps.adminNav', to: '/dashboard/apps', analyticsId: 'apps.admin.open', superAdmin: true },
+      { key: 'aiTools', icon: Wrench, label: 'tools.admin.nav', to: '/dashboard/tools', analyticsId: 'tools.admin.open', superAdmin: true },
+      { key: 'helpAdmin', icon: BookOpen, label: 'help.adminNav', to: '/dashboard/help', analyticsId: 'help.admin.open', superAdmin: true },
+      { key: 'pagesAdmin', icon: FileText, label: 'pages.nav', to: '/dashboard/pages', analyticsId: 'pages.admin.open', superAdmin: true },
     ],
   },
 ]
@@ -68,12 +73,11 @@ export const SIDEBAR_GROUPS: SidebarGroup[] = [
 // Flatten for backward compatibility with layout.tsx
 const SIDEBAR_NAV_ITEMS = SIDEBAR_GROUPS.flatMap((g) => g.items)
 
-export const SIDEBAR_NAV = SIDEBAR_NAV_ITEMS.map(({ key, icon, label, to, review, admin, superAdmin, passwordCapability }) => ({
+export const SIDEBAR_NAV = SIDEBAR_NAV_ITEMS.map(({ key, icon, label, to, admin, superAdmin, passwordCapability }) => ({
   key,
   icon,
   label,
   to,
-  review,
   admin,
   superAdmin,
   passwordCapability,
@@ -87,6 +91,7 @@ export const SIDEBAR_NAV = SIDEBAR_NAV_ITEMS.map(({ key, icon, label, to, review
 const OVERVIEW_CARDS = [
   { key: 'skills', icon: Package, label: 'overview.mySkills', to: '/dashboard/skills', analyticsId: 'navigation.owned.skills', desc: 'overview.mySkillsDesc' },
   { key: 'suites', icon: Boxes, label: 'overview.mySuites', to: '/dashboard/suites', analyticsId: 'navigation.owned.suites', desc: 'overview.mySuitesDesc' },
+  { key: 'plugins', icon: Puzzle, label: 'overview.myPlugins', to: '/dashboard/plugins', analyticsId: 'navigation.owned.plugins', desc: 'overview.myPluginsDesc' },
   { key: 'tokens', icon: Key, label: 'overview.tokens', to: '/dashboard/tokens', analyticsId: 'account.tokens.open', desc: 'overview.tokensDesc' },
   { key: 'stars', icon: Star, label: 'overview.stars', to: '/dashboard/stars', analyticsId: 'navigation.starred.open', desc: 'overview.starsDesc' },
   { key: 'profile', icon: UserCog, label: 'overview.profile', to: '/settings/profile', analyticsId: 'account.profile.open', desc: 'overview.profileDesc' },

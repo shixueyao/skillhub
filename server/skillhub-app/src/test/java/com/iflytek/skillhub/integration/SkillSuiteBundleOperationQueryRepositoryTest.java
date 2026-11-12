@@ -1,6 +1,5 @@
 package com.iflytek.skillhub.integration;
 
-import com.iflytek.skillhub.support.PostgresTestImage;
 import com.iflytek.skillhub.domain.namespace.Namespace;
 import com.iflytek.skillhub.domain.skill.SkillVisibility;
 import com.iflytek.skillhub.domain.suite.SkillSuite;
@@ -54,7 +53,7 @@ class SkillSuiteBundleOperationQueryRepositoryTest {
 
     @Container
     private static final PostgreSQLContainer<?> POSTGRES =
-            new PostgreSQLContainer<>(PostgresTestImage.name());
+            new PostgreSQLContainer<>("postgres:16-alpine");
 
     @DynamicPropertySource
     static void configurePostgres(DynamicPropertyRegistry registry) {

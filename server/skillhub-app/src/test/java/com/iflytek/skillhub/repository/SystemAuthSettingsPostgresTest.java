@@ -1,6 +1,5 @@
 package com.iflytek.skillhub.repository;
 
-import com.iflytek.skillhub.support.PostgresTestImage;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
 
@@ -57,7 +56,7 @@ import org.springframework.transaction.support.TransactionTemplate;
 @Testcontainers
 class SystemAuthSettingsPostgresTest {
     @Container
-    private static final PostgreSQLContainer<?> POSTGRES = new PostgreSQLContainer<>(PostgresTestImage.name());
+    private static final PostgreSQLContainer<?> POSTGRES = new PostgreSQLContainer<>("postgres:16-alpine");
 
     @DynamicPropertySource
     static void configurePostgres(DynamicPropertyRegistry registry) {

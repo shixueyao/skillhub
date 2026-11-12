@@ -1,6 +1,5 @@
 package com.iflytek.skillhub.repository;
 
-import com.iflytek.skillhub.support.PostgresTestImage;
 import com.iflytek.skillhub.githubsync.GithubSyncPublicationRepository;
 import com.iflytek.skillhub.infra.jpa.JdbcGithubSyncPublicationRepository;
 import org.junit.jupiter.api.Test;
@@ -31,7 +30,7 @@ class GithubSyncPathMoveRepositoryTest {
     private static final String DIGEST = "b".repeat(64);
 
     @Container
-    private static final PostgreSQLContainer<?> POSTGRES = new PostgreSQLContainer<>(PostgresTestImage.name());
+    private static final PostgreSQLContainer<?> POSTGRES = new PostgreSQLContainer<>("postgres:16-alpine");
 
     @DynamicPropertySource
     static void configurePostgres(DynamicPropertyRegistry registry) {

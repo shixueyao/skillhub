@@ -67,9 +67,6 @@ class ReviewPortalControllerTest {
     private MockMvc mockMvc;
 
     @MockBean
-    private com.iflytek.skillhub.repository.ReviewQueueQueryRepository reviewQueueQueryRepository;
-
-    @MockBean
     private ReviewService reviewService;
 
     @MockBean
@@ -101,26 +98,6 @@ class ReviewPortalControllerTest {
 
     @MockBean
     private ReviewSkillDetailAppService reviewSkillDetailAppService;
-
-    @Test
-    void reviewScopesIncludesPlatformAuthorizedNamespacesWithoutMembership() throws Exception {
-        Namespace namespace = createNamespace(20L, "outside-membership");
-        stubNamespaceRoles("platform", List.of());
-        given(rbacService.getUserRoleCodes("platform")).willReturn(Set.of("SKILL_ADMIN"));
-        given(namespaceRepository.findAll()).willReturn(List.of(namespace));
-        mockMvc.perform(get("/api/v1/reviews/scopes").with(auth("platform")))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.data[0].id").value(20))
-                .andExpect(jsonPath("$.data[0].slug").value("outside-membership"));
-    }
-
-    @Test
-    void reviewScopesDoesNotGrantSkillPermissionToUserAdmin() throws Exception {
-        stubNamespaceRoles("profile-admin", List.of());
-        given(rbacService.getUserRoleCodes("profile-admin")).willReturn(Set.of("USER_ADMIN"));
-        mockMvc.perform(get("/api/web/reviews/scopes").with(auth("profile-admin")))
-                .andExpect(status().isForbidden());
-    }
 
     @Test
     void submitReview_passesNamespaceRolesToService() throws Exception {
@@ -262,14 +239,12 @@ class ReviewPortalControllerTest {
                 1,
                 5,
                 Sort.by(
-                        new Sort.Order(Sort.Direction.ASC, "submittedAt"),
+                        new Sort.Order(Sort.Direction.ASC, "reviewedAt"),
                         new Sort.Order(Sort.Direction.ASC, "id")
                 )
         );
-        given(reviewQueueQueryRepository.list(
-                new com.iflytek.skillhub.repository.ReviewQueueQueryRepository.Filter("APPROVED", null, "", null, null),
-                true, Set.of(), pageable)).willReturn(new PageImpl<>(List.of(), pageable, 0));
-        given(governanceQueryRepository.getReviewTaskResponses(List.of())).willReturn(List.of());
+        given(reviewTaskRepository.findByStatus(ReviewTaskStatus.APPROVED, pageable))
+                .willReturn(new PageImpl<>(List.of(), pageable, 0));
 
         mockMvc.perform(get("/api/v1/reviews")
                         .param("status", "APPROVED")
@@ -280,9 +255,7 @@ class ReviewPortalControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.code").value(0));
 
-        verify(reviewQueueQueryRepository).list(
-                new com.iflytek.skillhub.repository.ReviewQueueQueryRepository.Filter("APPROVED", null, "", null, null),
-                true, Set.of(), pageable);
+        verify(reviewTaskRepository).findByStatus(ReviewTaskStatus.APPROVED, pageable);
     }
 
     @Test
@@ -590,16 +563,13 @@ class ReviewPortalControllerTest {
                 0,
                 20,
                 Sort.by(
-                        new Sort.Order(Sort.Direction.DESC, "submittedAt"),
+                        new Sort.Order(Sort.Direction.DESC, status == ReviewTaskStatus.PENDING ? "submittedAt" : "reviewedAt"),
                         new Sort.Order(Sort.Direction.DESC, "id")
                 )
         );
 
-        given(reviewQueueQueryRepository.list(
-                new com.iflytek.skillhub.repository.ReviewQueueQueryRepository.Filter(status.name(), null, "", null, null),
-                true, Set.of(), pageable)).willReturn(new PageImpl<>(tasks.stream().map(task ->
-                        new com.iflytek.skillhub.repository.ReviewQueueQueryRepository.Entry(task, "Skill", "Summary", "FIRST_PUBLISH"))
-                        .toList(), pageable, 42));
+        given(reviewTaskRepository.findByStatus(status, pageable))
+                .willReturn(new PageImpl<>(tasks, pageable, 42));
         given(namespaceRepository.findById(20L)).willReturn(Optional.of(namespace));
         given(rbacService.getUserRoleCodes("admin")).willReturn(Set.of("SKILL_ADMIN"));
         tasks.forEach(task -> given(reviewService.canViewReview(

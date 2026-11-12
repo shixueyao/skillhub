@@ -1,6 +1,5 @@
 package com.iflytek.skillhub.repository;
 
-import com.iflytek.skillhub.support.PostgresTestImage;
 import com.iflytek.skillhub.githubsync.GithubSystemCredential;
 import com.iflytek.skillhub.infra.jpa.JdbcGithubSystemCredentialRepository;
 import org.flywaydb.core.Flyway;
@@ -21,7 +20,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 class GithubSystemCredentialRepositoryTest {
     @Container
     private static final PostgreSQLContainer<?> POSTGRES =
-            new PostgreSQLContainer<>(PostgresTestImage.name());
+            new PostgreSQLContainer<>("postgres:16-alpine");
 
     @Test
     void quotaExhaustionDoesNotInvalidateCredentialButAuthenticationFailureDoes() {

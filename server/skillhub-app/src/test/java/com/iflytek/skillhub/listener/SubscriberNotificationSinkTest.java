@@ -86,12 +86,11 @@ class SubscriberNotificationSinkTest {
                 member("current-admin", NamespaceRole.ADMIN),
                 member("private-member", NamespaceRole.MEMBER)));
 
-        var event = new SkillPublishedEvent(SKILL_ID, VERSION_ID, "publisher");
-        listener.onSkillPublishedForSubscribers(event);
+        listener.onSkillPublishedForSubscribers(new SkillPublishedEvent(SKILL_ID, VERSION_ID, "publisher"));
 
         String body = "{\"skillId\":1,\"skillName\":\"Test Skill\",\"slug\":\"test-skill\",\"namespace\":\"demo\"}";
         verify(notificationService).create("current-admin", NotificationCategory.PUBLISH,
-                "SUBSCRIPTION_NEW_VERSION", "Skill updated: Test Skill", body, "SKILL", SKILL_ID, event.eventId(), event.occurredAt());
+                "SUBSCRIPTION_NEW_VERSION", "Skill updated: Test Skill", body, "SKILL", SKILL_ID);
         verify(accountRepository).findByIdIn(candidates);
         verify(memberRepository).findByNamespaceIdAndUserIdIn(NAMESPACE_ID, candidates);
     }
@@ -107,12 +106,11 @@ class SubscriberNotificationSinkTest {
         when(memberRepository.findByNamespaceIdAndUserIdIn(NAMESPACE_ID, candidates)).thenReturn(List.of(
                 member("manager", NamespaceRole.ADMIN), member("ordinary-member", NamespaceRole.MEMBER)));
 
-        var event = new SkillPublishedEvent(SKILL_ID, VERSION_ID, "publisher");
-        listener.onSkillPublishedForSubscribers(event);
+        listener.onSkillPublishedForSubscribers(new SkillPublishedEvent(SKILL_ID, VERSION_ID, "publisher"));
 
         String body = "{\"skillId\":1,\"skillName\":\"Test Skill\",\"slug\":\"test-skill\",\"namespace\":\"demo\"}";
         verify(notificationService).create("manager", NotificationCategory.PUBLISH,
-                "SUBSCRIPTION_NEW_VERSION", "Skill updated: Test Skill", body, "SKILL", SKILL_ID, event.eventId(), event.occurredAt());
+                "SUBSCRIPTION_NEW_VERSION", "Skill updated: Test Skill", body, "SKILL", SKILL_ID);
         verify(accountRepository).findByIdIn(candidates);
         verify(memberRepository).findByNamespaceIdAndUserIdIn(NAMESPACE_ID, candidates);
     }
@@ -129,12 +127,12 @@ class SubscriberNotificationSinkTest {
         when(memberRepository.findByNamespaceIdAndUserIdIn(NAMESPACE_ID, candidates)).thenReturn(List.of(
                 member("actor", NamespaceRole.ADMIN), member("current", NamespaceRole.MEMBER)));
 
-        var event = new SkillVersionYankedEvent(SKILL_ID, VERSION_ID, "actor", true);
-        listener.onSkillVersionYankedForSubscribers(event);
+        listener.onSkillVersionYankedForSubscribers(
+                new SkillVersionYankedEvent(SKILL_ID, VERSION_ID, "actor", true));
 
         String body = "{\"skillId\":1,\"skillName\":\"Test Skill\",\"slug\":\"test-skill\",\"namespace\":\"demo\"}";
         verify(notificationService).create("current", NotificationCategory.PUBLISH,
-                "SUBSCRIPTION_VERSION_YANKED", "Skill version yanked: Test Skill", body, "SKILL", SKILL_ID, event.eventId(), event.occurredAt());
+                "SUBSCRIPTION_VERSION_YANKED", "Skill version yanked: Test Skill", body, "SKILL", SKILL_ID);
         verify(accountRepository).findByIdIn(candidates);
         verify(memberRepository).findByNamespaceIdAndUserIdIn(NAMESPACE_ID, candidates);
     }

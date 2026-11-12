@@ -1,7 +1,6 @@
 package com.iflytek.skillhub.domain.skill.service;
 
 import com.iflytek.skillhub.domain.event.SkillDownloadedEvent;
-import com.iflytek.skillhub.domain.event.BusinessEventSnapshot;
 import com.iflytek.skillhub.domain.namespace.Namespace;
 import com.iflytek.skillhub.domain.namespace.NamespaceRepository;
 import com.iflytek.skillhub.domain.namespace.NamespaceRole;
@@ -173,16 +172,15 @@ public class SkillDownloadService {
 
         // Only increment download count for PUBLISHED versions
         if (version.getStatus() == SkillVersionStatus.PUBLISHED) {
-            recordPublishedDownload(skill, version, currentUserId);
+            recordPublishedDownload(skill, version);
         }
         return result;
     }
 
-    private void recordPublishedDownload(Skill skill, SkillVersion version, String currentUserId) {
+    private void recordPublishedDownload(Skill skill, SkillVersion version) {
         skillRepository.incrementDownloadCount(skill.getId());
         skillVersionStatsRepository.incrementDownloadCount(version.getId(), skill.getId());
-        eventPublisher.publishEvent(new SkillDownloadedEvent(skill.getId(), version.getId(),
-                BusinessEventSnapshot.capture(skill, currentUserId, "download")));
+        eventPublisher.publishEvent(new SkillDownloadedEvent(skill.getId(), version.getId()));
     }
 
     private DownloadResult buildDownloadResult(Skill skill, SkillVersion version) {

@@ -1,6 +1,5 @@
 package com.iflytek.skillhub.controller;
 
-import com.iflytek.skillhub.support.PostgresTestImage;
 import ch.qos.logback.classic.Logger;
 import ch.qos.logback.classic.spi.ILoggingEvent;
 import ch.qos.logback.classic.spi.ThrowableProxyUtil;
@@ -154,7 +153,7 @@ class GithubSyncHttpIngestionInteropTest {
     private static String s3Endpoint;
 
     @Container
-    private static final PostgreSQLContainer<?> POSTGRES = new PostgreSQLContainer<>(PostgresTestImage.name());
+    private static final PostgreSQLContainer<?> POSTGRES = new PostgreSQLContainer<>("postgres:16-alpine");
     @Container
     private static final GenericContainer<?> REDIS = new GenericContainer<>("redis:7-alpine")
             .withExposedPorts(6379);

@@ -1,6 +1,5 @@
 package com.iflytek.skillhub.repository;
 
-import com.iflytek.skillhub.support.PostgresTestImage;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.iflytek.skillhub.config.SkillSuiteBundleProperties;
@@ -68,7 +67,7 @@ class SkillSuiteBundlePersistenceTest {
 
     @Container
     private static final PostgreSQLContainer<?> POSTGRES =
-            new PostgreSQLContainer<>(PostgresTestImage.name());
+            new PostgreSQLContainer<>("postgres:16-alpine");
 
     @DynamicPropertySource
     static void configurePostgres(DynamicPropertyRegistry registry) {

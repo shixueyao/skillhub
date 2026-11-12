@@ -34,11 +34,6 @@ export function MyNamespacesPage() {
     navigate({ to: `/dashboard/namespaces/${encodeURIComponent(slug)}` })
   }
 
-  const handleGithubSourcesClick = (slug: string, e: React.MouseEvent) => {
-    e.stopPropagation()
-    navigate({ to: `/dashboard/namespaces/${encodeURIComponent(slug)}/github-sources` })
-  }
-
   const resolveStatusLabel = (status: string) => {
     if (status === 'FROZEN') {
       return t('namespaceStatus.frozen')
@@ -134,11 +129,6 @@ export function MyNamespacesPage() {
                   <Button data-analytics-id="namespace.management.open" variant="outline" size="sm" onClick={() => handleNamespaceClick(namespace.slug)}>
                     {t('namespaceManagement.enter')}
                   </Button>
-                  {namespace.type === 'TEAM' && (namespace.currentUserRole === 'OWNER' || namespace.currentUserRole === 'ADMIN') && (
-                    <Button data-analytics-id="github.namespace.open" variant="outline" size="sm" onClick={(e) => handleGithubSourcesClick(namespace.slug, e)}>
-                      {t('githubSync.teamLink')}
-                    </Button>
-                  )}
                 </div>
               </div>
             </Card>

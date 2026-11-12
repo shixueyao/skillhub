@@ -1,0 +1,26 @@
+# 运行时生成 / 含明文凭据，不要提交
+env/lan.env
+ACCESS.txt
+
+# 首页/页面设置由管理员编辑，属运行时数据
+# （迁移时必须随目录拷贝，只是不入库）
+site/content/home.json
+site/content/pages.json
+site/content/help.json
+site/content/help/
+
+# 迁移数据包与历史备份，不提交到 Git
+migration/backup/
+db-before-*.dump
+
+# 离线镜像包体积大，随目录拷贝但不入库
+images/*.tar
+images/manifest.txt
+images/manifest.env
+
+# nginx DAV 上传临时目录（运行时生成）
+plugins/versions/.tmp/
+
+# Python 缓存
+__pycache__/
+*.pyc

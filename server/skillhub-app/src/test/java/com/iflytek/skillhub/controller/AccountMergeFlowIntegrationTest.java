@@ -1,6 +1,5 @@
 package com.iflytek.skillhub.controller;
 
-import com.iflytek.skillhub.support.PostgresTestImage;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.authentication;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
@@ -54,7 +53,7 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 class AccountMergeFlowIntegrationTest {
 
     @Container
-    private static final PostgreSQLContainer<?> POSTGRES = new PostgreSQLContainer<>(PostgresTestImage.name());
+    private static final PostgreSQLContainer<?> POSTGRES = new PostgreSQLContainer<>("postgres:16-alpine");
 
     @DynamicPropertySource
     static void configurePostgres(DynamicPropertyRegistry registry) {

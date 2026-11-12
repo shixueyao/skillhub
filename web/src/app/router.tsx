@@ -2,14 +2,13 @@ import { lazy, Suspense, type ComponentType } from 'react'
 import { useTranslation } from 'react-i18next'
 import { createRouter, createRoute, createRootRoute, redirect } from '@tanstack/react-router'
 import { Layout } from './layout'
-import { getCurrentUser, type GithubSyncRepositoryQuery, type GithubSyncRunQuery } from '@/api/client'
+import { getCurrentUser } from '@/api/client'
 import { RoleGuard } from '@/shared/components/role-guard'
 import { RouteError } from '@/shared/components/route-error'
 import { createRedirectAuthenticated, createRequireAuth, isSafeAuthReturnTo } from '@/shared/lib/auth-route'
 import { clearDynamicImportReloadGuard, recoverFromDynamicImportError } from '@/shared/lib/dynamic-import-recovery'
 import { normalizeSearchQuery } from '@/shared/lib/search-query'
 import { captureInvitationFragment } from '@/shared/lib/namespace-invitation'
-import { validateReviewSearch } from '@/features/review/review-route-search'
 
 /**
  * Central route registry for the SkillHub web app.
@@ -35,10 +34,6 @@ function RouteLoadingFallback() {
 
 function SilentRouteFallback() {
   return <div className="min-h-[40vh]" aria-hidden />
-}
-
-function allowedSearchValue<T extends string>(value: unknown, options: readonly T[]): T | undefined {
-  return typeof value === 'string' && options.some((option) => option === value) ? value as T : undefined
 }
 
 interface LazyRouteOptions {
@@ -92,7 +87,7 @@ function createRoleProtectedRouteComponent<TModule extends Record<string, unknow
   }
 }
 
-const LandingPage = createLazyRouteComponent(() => import('@/pages/landing'), 'LandingPage')
+const PortalHomePage = createLazyRouteComponent(() => import('@/pages/portal-home'), 'PortalHomePage')
 const HomePage = createLazyRouteComponent(() => import('@/pages/home'), 'HomePage')
 const LoginPage = createLazyRouteComponent(() => import('@/pages/login'), 'LoginPage')
 const DeviceAuthPage = createLazyRouteComponent(() => import('@/pages/device'), 'DeviceAuthPage')
@@ -100,7 +95,16 @@ const RegisterPage = createLazyRouteComponent(() => import('@/pages/register'), 
 const ResetPasswordPage = createLazyRouteComponent(() => import('@/pages/reset-password'), 'ResetPasswordPage')
 const PrivacyPolicyPage = createLazyRouteComponent(() => import('@/pages/privacy'), 'PrivacyPolicyPage')
 const SearchPage = createLazyRouteComponent(() => import('@/pages/search'), 'SearchPage')
-const GithubSkillsPage = createLazyRouteComponent(() => import('@/pages/github-skills'), 'GithubSkillsPage')
+const AppsPage = createLazyRouteComponent(() => import('@/pages/apps'), 'AppsPage')
+const ToolsPage = createLazyRouteComponent(() => import('@/pages/tools'), 'ToolsPage')
+const ToolDetailPage = createLazyRouteComponent(() => import('@/pages/tool-detail'), 'ToolDetailPage')
+const McpPage = createLazyRouteComponent(() => import('@/pages/mcp'), 'McpPage')
+const McpDetailPage = createLazyRouteComponent(() => import('@/pages/mcp-detail'), 'McpDetailPage')
+const McpPublishPage = createLazyRouteComponent(() => import('@/pages/dashboard/mcp-publish'), 'McpPublishPage')
+const MyMcpPage = createLazyRouteComponent(() => import('@/pages/dashboard/mcp'), 'MyMcpPage')
+const HelpPage = createLazyRouteComponent(() => import('@/pages/help'), 'HelpPage')
+const PluginsPage = createLazyRouteComponent(() => import('@/pages/plugins'), 'PluginsPage')
+const PluginDetailPage = createLazyRouteComponent(() => import('@/pages/plugin-detail'), 'PluginDetailPage')
 const SuitesPage = createLazyRouteComponent(() => import('@/pages/suites'), 'SuitesPage')
 const SuiteDetailPage = createLazyRouteComponent(() => import('@/pages/suite-detail'), 'SuiteDetailPage')
 const TermsOfServicePage = createLazyRouteComponent(() => import('@/pages/terms'), 'TermsOfServicePage')
@@ -133,6 +137,52 @@ const MySuitesPage = createLazyRouteComponent(
   'MySuitesPage',
   dashboardRouteOptions,
 )
+const MyPluginsPage = createLazyRouteComponent(
+  () => import('@/pages/dashboard/plugins'),
+  'MyPluginsPage',
+  dashboardRouteOptions,
+)
+const PublishPluginPage = createLazyRouteComponent(
+  () => import('@/pages/dashboard/publish-plugin'),
+  'PublishPluginPage',
+  dashboardRouteOptions,
+)
+const HomeContentPage = createRoleProtectedRouteComponent(
+  () => import('@/pages/dashboard/home-content'),
+  'HomeContentPage',
+  ['SUPER_ADMIN'],
+  dashboardRouteOptions,
+)
+const AppsAdminPage = createRoleProtectedRouteComponent(
+  () => import('@/pages/dashboard/apps'),
+  'AppsAdminPage',
+  ['SUPER_ADMIN'],
+  dashboardRouteOptions,
+)
+const AdminToolsPage = createRoleProtectedRouteComponent(
+  () => import('@/pages/dashboard/tools'),
+  'AdminToolsPage',
+  ['SUPER_ADMIN'],
+  dashboardRouteOptions,
+)
+const PublishToolPage = createRoleProtectedRouteComponent(
+  () => import('@/pages/dashboard/publish-tool'),
+  'PublishToolPage',
+  ['SUPER_ADMIN'],
+  dashboardRouteOptions,
+)
+const HelpAdminPage = createRoleProtectedRouteComponent(
+  () => import('@/pages/dashboard/help'),
+  'HelpAdminPage',
+  ['SUPER_ADMIN'],
+  dashboardRouteOptions,
+)
+const PageContentAdminPage = createRoleProtectedRouteComponent(
+  () => import('@/pages/dashboard/pages'),
+  'PageContentAdminPage',
+  ['SUPER_ADMIN'],
+  dashboardRouteOptions,
+)
 const SuitePublishingTaskPage = createLazyRouteComponent(
   () => import('@/pages/dashboard/suite-publishing-task'),
   'SuitePublishingTaskPage',
@@ -161,18 +211,12 @@ const NamespaceReviewsPage = createLazyRouteComponent(
   'NamespaceReviewsPage',
   dashboardRouteOptions,
 )
-const NamespaceGithubSourcesPage = createLazyRouteComponent(
-  () => import('@/pages/dashboard/namespace-github-sources'), 'NamespaceGithubSourcesPage', dashboardRouteOptions,
-)
 const NamespaceReviewDetailPage = createLazyRouteComponent(
   () => import('@/pages/dashboard/review-detail'),
   'NamespaceReviewDetailPage',
   dashboardRouteOptions,
 )
 const GovernancePage = createLazyRouteComponent(() => import('@/pages/dashboard/governance'), 'GovernancePage', dashboardRouteOptions)
-const GithubSyncPage = createRoleProtectedRouteComponent(
-  () => import('@/pages/dashboard/github-sync'), 'GithubSyncPage', ['SUPER_ADMIN'], dashboardRouteOptions,
-)
 const ReviewsPage = createLazyRouteComponent(() => import('@/pages/dashboard/reviews'), 'ReviewsPage', dashboardRouteOptions)
 const ReviewProgressPage = createLazyRouteComponent(
   () => import('@/pages/dashboard/review-progress'),
@@ -259,7 +303,7 @@ const redirectAuthenticated = createRedirectAuthenticated(getCurrentUser)
 const landingRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: '/',
-  component: LandingPage,
+  component: PortalHomePage,
 })
 
 const skillsRoute = createRoute({
@@ -316,21 +360,58 @@ const searchRoute = createRoute({
   },
 })
 
-const githubSkillsRoute = createRoute({
-  getParentRoute: () => rootRoute,
-  path: 'github',
-  component: GithubSkillsPage,
-  validateSearch: (search: Record<string, unknown>): { q: string; sort: string; page: number } => ({
-    q: normalizeSearchQuery(typeof search.q === 'string' ? search.q : ''),
-    sort: search.sort === 'downloads' ? 'downloads' : 'newest',
-    page: Math.max(0, Number(search.page) || 0),
-  }),
-})
-
 const suitesRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: 'suites',
   component: SuitesPage,
+})
+
+const appsRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: 'apps',
+  component: AppsPage,
+})
+
+const toolsRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: 'tools',
+  component: ToolsPage,
+})
+
+const toolDetailRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: 'tools/$toolId',
+  component: ToolDetailPage,
+})
+
+const mcpRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: 'mcp',
+  component: McpPage,
+})
+
+const mcpDetailRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: 'mcp/$slug',
+  component: McpDetailPage,
+})
+
+const helpRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: 'help',
+  component: HelpPage,
+})
+
+const pluginsRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: 'plugins',
+  component: PluginsPage,
+})
+
+const pluginDetailRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: '/plugins/$namespace/$slug',
+  component: PluginDetailPage,
 })
 
 const suiteDetailRoute = createRoute({
@@ -435,6 +516,88 @@ const dashboardSuiteCreateRoute = createRoute({
   component: SuiteCreatePage,
 })
 
+const dashboardPluginsRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: 'dashboard/plugins',
+  beforeLoad: requireAuth,
+  component: MyPluginsPage,
+})
+
+const dashboardHomeContentRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: 'dashboard/home-content',
+  beforeLoad: requireAuth,
+  component: HomeContentPage,
+})
+
+const dashboardAppsRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: 'dashboard/apps',
+  beforeLoad: requireAuth,
+  component: AppsAdminPage,
+})
+
+const dashboardToolsRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: 'dashboard/tools',
+  beforeLoad: requireAuth,
+  component: AdminToolsPage,
+})
+
+const dashboardToolPublishRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: 'dashboard/tools/publish',
+  beforeLoad: requireAuth,
+  component: PublishToolPage,
+})
+
+const dashboardMcpRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: 'dashboard/mcp',
+  beforeLoad: requireAuth,
+  component: MyMcpPage,
+})
+
+const dashboardMcpPublishRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: 'dashboard/mcp/publish',
+  beforeLoad: requireAuth,
+  component: McpPublishPage,
+})
+
+const dashboardMcpEditRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: 'dashboard/mcp/$slug/edit',
+  beforeLoad: requireAuth,
+  component: McpPublishPage,
+})
+
+const dashboardHelpRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: 'dashboard/help',
+  beforeLoad: requireAuth,
+  component: HelpAdminPage,
+})
+
+const dashboardPagesRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: 'dashboard/pages',
+  beforeLoad: requireAuth,
+  component: PageContentAdminPage,
+})
+
+const dashboardPluginPublishRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: 'dashboard/plugins/publish',
+  beforeLoad: requireAuth,
+  validateSearch: (search: Record<string, unknown>): { namespace?: string } => ({
+    namespace: typeof search.namespace === 'string' && search.namespace
+      ? search.namespace.replace(/^@/, '')
+      : undefined,
+  }),
+  component: PublishPluginPage,
+})
+
 const dashboardSuitesRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: 'dashboard/suites',
@@ -533,17 +696,7 @@ const dashboardNamespaceReviewsRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: 'dashboard/namespaces/$slug/reviews',
   beforeLoad: requireAuth,
-  validateSearch: (search: Record<string, unknown>): { queue?: 'user' | 'sync' } => ({
-    queue: search.queue === 'sync' ? 'sync' : undefined,
-  }),
   component: NamespaceReviewsPage,
-})
-
-const dashboardNamespaceGithubSourcesRoute = createRoute({
-  getParentRoute: () => rootRoute,
-  path: 'dashboard/namespaces/$slug/github-sources',
-  beforeLoad: requireAuth,
-  component: NamespaceGithubSourcesPage,
 })
 
 const dashboardGovernanceRoute = createRoute({
@@ -553,53 +706,13 @@ const dashboardGovernanceRoute = createRoute({
   component: GovernancePage,
 })
 
-const dashboardGithubSyncRoute = createRoute({
-  getParentRoute: () => rootRoute,
-  path: 'dashboard/github-sync',
-  beforeLoad: requireAuth,
-  validateSearch: (search: Record<string, unknown>): {
-    runId?: string; sourceId?: number; repositoryId?: number; tab?: 'overview' | 'repositories' | 'runs';
-    drawer?: 'collection' | 'settings'; page?: number; runPage?: number; q?: string;
-    originType?: GithubSyncRepositoryQuery['originType']; state?: GithubSyncRepositoryQuery['state'];
-    sourceStatus?: GithubSyncRepositoryQuery['sourceStatus']; runKind?: GithubSyncRunQuery['kind'];
-    runStatus?: GithubSyncRunQuery['status']; asOf?: string;
-  } => ({
-    runId: typeof search.runId === 'string' && /^[0-9a-f-]{36}$/i.test(search.runId) ? search.runId : undefined,
-    sourceId: (typeof search.sourceId === 'number' || typeof search.sourceId === 'string')
-      && Number.isSafeInteger(Number(search.sourceId)) && Number(search.sourceId) > 0
-      ? Number(search.sourceId) : undefined,
-    repositoryId: (typeof search.repositoryId === 'number' || typeof search.repositoryId === 'string')
-      && Number.isSafeInteger(Number(search.repositoryId)) && Number(search.repositoryId) > 0
-      ? Number(search.repositoryId) : undefined,
-    tab: allowedSearchValue(search.tab, ['overview', 'repositories', 'runs'] as const),
-    drawer: allowedSearchValue(search.drawer, ['collection', 'settings'] as const),
-    page: Number.isSafeInteger(Number(search.page)) && Number(search.page) >= 0 ? Number(search.page) : undefined,
-    runPage: Number.isSafeInteger(Number(search.runPage)) && Number(search.runPage) >= 0 ? Number(search.runPage) : undefined,
-    q: typeof search.q === 'string' ? search.q.slice(0, 120) : undefined,
-    originType: allowedSearchValue(search.originType, ['CURATED_REPOSITORY', 'CURATED_OWNER', 'SEARCH_RULE', 'OFFICIAL_DISCOVERY', 'TEAM_CONFIG'] as const),
-    state: allowedSearchValue(search.state, ['REGISTERED', 'PENDING', 'VALIDATING', 'NO_VALID_SKILL', 'VALIDATION_FAILED', 'UNREACHABLE', 'BOUND_WITHOUT_SOURCE'] as const),
-    sourceStatus: allowedSearchValue(search.sourceStatus, ['ACTIVE', 'PAUSED', 'UNREACHABLE'] as const),
-    runKind: allowedSearchValue(search.runKind, ['DISCOVERY', 'REPOSITORY_SYNC'] as const),
-    runStatus: allowedSearchValue(search.runStatus, ['QUEUED', 'LEASED', 'RETRY_WAIT', 'PARTIAL', 'ACQUISITION_COMPLETE', 'FAILED'] as const),
-    asOf: typeof search.asOf === 'string' && !Number.isNaN(Date.parse(search.asOf)) ? search.asOf : undefined,
-  }),
-  component: GithubSyncPage,
-})
-
-const dashboardGithubDeepDiscoveryRoute = createRoute({
-  getParentRoute: () => rootRoute,
-  path: 'dashboard/github-deep-discovery',
-  beforeLoad: async (ctx) => {
-    await requireAuth(ctx)
-    throw redirect({ to: '/dashboard/github-sync', search: { drawer: 'collection' } })
-  },
-})
-
 const dashboardReviewsRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: 'dashboard/reviews',
   beforeLoad: requireAuth,
-  validateSearch: validateReviewSearch,
+  validateSearch: (search: Record<string, unknown>): { type?: 'skill' | 'profile' } => ({
+    type: search.type === 'skill' || search.type === 'profile' ? search.type : undefined,
+  }),
   component: ReviewsPage,
 })
 
@@ -636,7 +749,6 @@ const dashboardReviewDetailRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: 'dashboard/reviews/$id',
   beforeLoad: requireAuth,
-  validateSearch: validateReviewSearch,
   component: ReviewDetailPage,
 })
 
@@ -644,7 +756,6 @@ const dashboardNamespaceReviewDetailRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: 'dashboard/namespaces/$slug/reviews/$id',
   beforeLoad: requireAuth,
-  validateSearch: validateReviewSearch,
   component: NamespaceReviewDetailPage,
 })
 
@@ -673,13 +784,6 @@ const dashboardSubscriptionsRoute = createRoute({
     page: typeof search.page === 'number' && search.page > 0 ? search.page : undefined,
   }),
   component: MySubscriptionsPage,
-})
-
-const notificationEmailBatchRoute = createRoute({
-  getParentRoute: () => rootRoute,
-  path: 'dashboard/notifications/email/$id',
-  beforeLoad: requireAuth,
-  component: createLazyRouteComponent(() => import('@/pages/notification-email-batch'), 'NotificationEmailBatchPage'),
 })
 
 const dashboardNotificationsRoute = createRoute({
@@ -790,7 +894,14 @@ const routeTree = rootRoute.addChildren([
   resetPasswordRoute,
   privacyRoute,
   searchRoute,
-  githubSkillsRoute,
+  appsRoute,
+  toolsRoute,
+  toolDetailRoute,
+  mcpRoute,
+  mcpDetailRoute,
+  helpRoute,
+  pluginsRoute,
+  pluginDetailRoute,
   suitesRoute,
   suiteDetailRoute,
   termsRoute,
@@ -801,6 +912,17 @@ const routeTree = rootRoute.addChildren([
   dashboardRoute,
   dashboardSkillsRoute,
   dashboardPublishRoute,
+  dashboardPluginsRoute,
+  dashboardHomeContentRoute,
+  dashboardAppsRoute,
+  dashboardToolsRoute,
+  dashboardToolPublishRoute,
+  dashboardMcpRoute,
+  dashboardMcpPublishRoute,
+  dashboardMcpEditRoute,
+  dashboardHelpRoute,
+  dashboardPagesRoute,
+  dashboardPluginPublishRoute,
   dashboardSuitesRoute,
   dashboardSuiteManagementRoute,
   dashboardSuitePublishingTaskRoute,
@@ -812,11 +934,8 @@ const routeTree = rootRoute.addChildren([
   dashboardNamespaceSettingsRoute,
   dashboardNamespaceMembersRoute,
   dashboardNamespaceReviewsRoute,
-  dashboardNamespaceGithubSourcesRoute,
   dashboardNamespaceReviewDetailRoute,
   dashboardGovernanceRoute,
-  dashboardGithubSyncRoute,
-  dashboardGithubDeepDiscoveryRoute,
   dashboardReviewsRoute,
   dashboardReviewProgressRoute,
   dashboardReportsRoute,
@@ -825,7 +944,6 @@ const routeTree = rootRoute.addChildren([
   dashboardStarsRoute,
   dashboardSubscriptionsRoute,
   dashboardNotificationsRoute,
-  notificationEmailBatchRoute,
   dashboardTokensRoute,
   cliAuthRoute,
   deviceAuthRoute,

@@ -37,14 +37,12 @@ class AdminUserAppServiceTest {
     private final RoleRepository roleRepository = mock(RoleRepository.class);
     private final UserAccountRepository userAccountRepository = mock(UserAccountRepository.class);
     private final ApplicationEventPublisher eventPublisher = mock(ApplicationEventPublisher.class);
-    private final com.iflytek.skillhub.notification.email.NotificationEmailPolicyProvider emailPolicy = mock(com.iflytek.skillhub.notification.email.NotificationEmailPolicyProvider.class);
-    private final com.iflytek.skillhub.notification.email.delivery.NotificationEmailCancellation emailCancellation = mock(com.iflytek.skillhub.notification.email.delivery.NotificationEmailCancellation.class);
     private final AdminUserAppService service = new AdminUserAppService(
             adminUserSearchRepository,
             userAccountRepository,
             userRoleBindingRepository,
             roleRepository,
-            eventPublisher, emailPolicy, emailCancellation, mock(com.iflytek.skillhub.notification.email.NotificationEmailAccountLifecycle.class)
+            eventPublisher
     );
 
     @Test
@@ -149,7 +147,7 @@ class AdminUserAppServiceTest {
 
     @Test
     void updateUserStatus_rejectsUnsupportedStatuses() {
-        when(userAccountRepository.findLockedFreshById("user-1"))
+        when(userAccountRepository.findById("user-1"))
                 .thenReturn(Optional.of(user("user-1", "alice", "alice@example.com", UserStatus.ACTIVE)));
 
         assertThrows(DomainBadRequestException.class, () -> service.updateUserStatus("user-1", "MERGED"));
@@ -158,7 +156,7 @@ class AdminUserAppServiceTest {
     @Test
     void updateUserStatus_updatesPersistedStatus() {
         UserAccount user = user("user-1", "alice", "alice@example.com", UserStatus.ACTIVE);
-        when(userAccountRepository.findLockedFreshById("user-1")).thenReturn(Optional.of(user));
+        when(userAccountRepository.findById("user-1")).thenReturn(Optional.of(user));
         when(userAccountRepository.save(user)).thenReturn(user);
 
         var response = service.updateUserStatus("user-1", "DISABLED");
@@ -170,7 +168,7 @@ class AdminUserAppServiceTest {
 
     @Test
     void updateUserStatus_rejectsSystemAccount() {
-        when(userAccountRepository.findLockedFreshById("builtin-skill-publisher"))
+        when(userAccountRepository.findById("builtin-skill-publisher"))
                 .thenReturn(Optional.of(systemUser()));
 
         assertThrows(DomainForbiddenException.class,
@@ -181,7 +179,7 @@ class AdminUserAppServiceTest {
 
     @Test
     void updateUserStatus_withUnknownUser_throwsNotFound() {
-        when(userAccountRepository.findLockedFreshById("missing")).thenReturn(Optional.empty());
+        when(userAccountRepository.findById("missing")).thenReturn(Optional.empty());
 
         assertThrows(DomainNotFoundException.class, () -> service.updateUserStatus("missing", "DISABLED"));
     }
@@ -211,21 +209,5 @@ class AdminUserAppServiceTest {
         ReflectionTestUtils.setField(role, "code", code);
         ReflectionTestUtils.setField(role, "name", code);
         return role;
-    }
-
-    @Test
-    void disableCancelsPendingEmailAndActivationDoesNotRestoreIt() {
-        var user = user("user-1", "alice", "alice@example.com", UserStatus.ACTIVE);
-        when(userAccountRepository.findLockedFreshById("user-1")).thenReturn(Optional.of(user));
-        when(userAccountRepository.save(any())).thenAnswer(inv -> inv.getArgument(0));
-        service.updateUserStatus("user-1", "DISABLED");
-        service.updateUserStatus("user-1", "ACTIVE");
-        verify(emailCancellation).cancelCategories(eq("user-1"), eq(Set.of(com.iflytek.skillhub.notification.domain.NotificationCategory.values())));
-        var order = inOrder(emailPolicy, userAccountRepository, emailCancellation);
-        order.verify(emailPolicy).lockCurrent();
-        order.verify(userAccountRepository).findLockedFreshById("user-1");
-        order.verify(userAccountRepository).save(user);
-        order.verify(emailCancellation).cancelCategories(anyString(), anySet());
-        verify(emailPolicy, times(2)).lockCurrent();
     }
 }

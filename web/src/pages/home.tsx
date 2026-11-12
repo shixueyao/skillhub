@@ -1,4 +1,3 @@
-import { useSitePresentation } from '@/shared/hooks/use-site-presentation'
 import { useNavigate } from '@tanstack/react-router'
 import { useTranslation } from 'react-i18next'
 import { SearchBar } from '@/features/search/search-bar'
@@ -8,12 +7,13 @@ import { QuickStartSection } from '@/shared/components/quick-start'
 import { useSearchSkills } from '@/shared/hooks/use-skill-queries'
 import { normalizeSearchQuery } from '@/shared/lib/search-query'
 import { BrandMark } from '@/shared/components/brand-mark'
+import { useSiteName } from '@/features/site/site-name'
 import { Button } from '@/shared/ui/button'
 
 export function HomePage() {
-  const { settings } = useSitePresentation()
   const { t } = useTranslation()
   const navigate = useNavigate()
+  const siteName = useSiteName()
 
   const { data: popularSkills, isLoading: isLoadingPopular } = useSearchSkills({
     sort: 'downloads',
@@ -39,8 +39,8 @@ export function HomePage() {
       <div className="text-center space-y-8 py-16 animate-fade-up">
         <div className="space-y-4">
           <BrandMark className="mx-auto h-16 w-16 rounded-2xl bg-background shadow-sm ring-1 ring-border/70 md:h-20 md:w-20" />
-          <h1 className="text-6xl md:text-7xl lg:text-8xl font-bold leading-tight [overflow-wrap:anywhere]" style={{ color: 'hsl(var(--foreground))' }}>
-            {settings.siteName ?? 'SkillHub'}
+          <h1 className="text-6xl md:text-7xl lg:text-8xl font-bold leading-tight" style={{ color: 'hsl(var(--foreground))' }}>
+            {siteName}
           </h1>
           <p className="text-xl md:text-2xl max-w-2xl mx-auto" style={{ color: 'hsl(var(--text-secondary))' }}>
             {t('home.subtitle')}

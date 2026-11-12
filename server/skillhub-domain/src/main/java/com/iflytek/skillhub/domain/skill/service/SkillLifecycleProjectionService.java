@@ -192,7 +192,7 @@ public class SkillLifecycleProjectionService {
                 version.getStatus().name(),
                 version.getParsedMetadataJson(),
                 metadata == null ? null : metadata.displayName(),
-                metadata == null ? null : metadata.shortDescription(),
+                metadata == null ? null : metadata.description(),
                 version.getGithubSyncRevision()
         );
     }

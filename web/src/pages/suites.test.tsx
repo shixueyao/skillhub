@@ -20,6 +20,9 @@ vi.mock('@/shared/hooks/use-label-queries', () => ({
   }),
 }))
 vi.mock('@/features/suite/resource-card', () => ({ ResourceCard: () => null }))
+vi.mock('@/features/pages/page-content', () => ({
+  usePageHeader: (_key: string, title: string, description: string) => ({ title, description }),
+}))
 
 describe('SuitesPage', () => {
   afterEach(() => {

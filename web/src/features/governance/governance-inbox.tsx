@@ -2,6 +2,7 @@ import { useNavigate } from '@tanstack/react-router'
 import { useTranslation } from 'react-i18next'
 import type { GovernanceInboxItem } from '@/api/types'
 import { formatLocalDateTime } from '@/shared/lib/date-time'
+import { Card } from '@/shared/ui/card'
 import { Button } from '@/shared/ui/button'
 import { GOVERNANCE_INBOX_SUBTITLE_CLASS_NAME } from './governance-inbox-style'
 
@@ -24,7 +25,7 @@ export function GovernanceInbox({ items, isLoading }: GovernanceInboxProps) {
   }
 
   if (!items || items.length === 0) {
-    return <div className="rounded-lg border border-dashed px-5 py-8 text-center text-sm text-muted-foreground">{t('governance.emptyInbox')}</div>
+    return <Card className="p-10 text-center text-muted-foreground">{t('governance.emptyInbox')}</Card>
   }
 
   const openItem = (item: GovernanceInboxItem) => {
@@ -48,9 +49,9 @@ export function GovernanceInbox({ items, isLoading }: GovernanceInboxProps) {
   }
 
   return (
-    <div className="divide-y divide-border/70">
+    <div className="space-y-4">
       {items.map((item) => (
-        <div key={`${item.type}-${item.id}`} className="space-y-3 py-5">
+        <Card key={`${item.type}-${item.id}`} className="p-5 space-y-3">
           <div className="flex items-start justify-between gap-4">
             <div className="space-y-2">
               <div className="flex items-center gap-2">
@@ -70,7 +71,7 @@ export function GovernanceInbox({ items, isLoading }: GovernanceInboxProps) {
               {t('governance.openItem')}
             </Button>
           </div>
-        </div>
+        </Card>
       ))}
     </div>
   )

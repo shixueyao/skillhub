@@ -362,38 +362,6 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/api/web/notification-email-preferences": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["preferences_2"];
-        put: operations["preferences"];
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/v1/notification-email-preferences": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["preferences_3"];
-        put: operations["preferences_1"];
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
     "/api/v1/namespaces/{slug}/members/{userId}/role": {
         parameters: {
             query?: never;
@@ -562,6 +530,40 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/web/dsh-plugins/{pluginId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        /** Update plugin metadata */
+        put: operations["updateDshPlugin"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/dsh-plugins/{pluginId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        /** Update plugin metadata */
+        put: operations["updateDshPlugin_1"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/web/authoring/drafts/{draftId}/files": {
         parameters: {
             query?: never;
@@ -595,6 +597,44 @@ export interface paths {
         post?: never;
         /** Delete one draft file */
         delete: operations["deleteDraftFile_1"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/ai-tools/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get one AI tool with usage instructions */
+        get: operations["getAiTool"];
+        /** Update AI tool metadata */
+        put: operations["updateAiTool"];
+        post?: never;
+        /** Delete an AI tool and its file */
+        delete: operations["deleteAiTool"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/web/ai-tools/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get one AI tool with usage instructions */
+        get: operations["getAiTool_1"];
+        /** Update AI tool metadata */
+        put: operations["updateAiTool_1"];
+        post?: never;
+        /** Delete an AI tool and its file */
+        delete: operations["deleteAiTool_1"];
         options?: never;
         head?: never;
         patch?: never;
@@ -664,40 +704,6 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/api/v1/admin/system-config/presentation": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** Read managed site presentation settings */
-        get: operations["current_3"];
-        /** Update site presentation settings */
-        put: operations["update"];
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/v1/admin/system-config/notification/email": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["current_4"];
-        put: operations["update_1"];
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
     "/api/v1/admin/system-config/avatar-review": {
         parameters: {
             query?: never;
@@ -705,8 +711,8 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        get: operations["current_5"];
-        put: operations["update_2"];
+        get: operations["current_2"];
+        put: operations["update"];
         post?: never;
         delete?: never;
         options?: never;
@@ -824,7 +830,7 @@ export interface paths {
         /** 读取平台技能采集控制状态 */
         get: operations["get_2"];
         /** 暂停或恢复平台技能采集 */
-        put: operations["update_3"];
+        put: operations["update_1"];
         post?: never;
         delete?: never;
         options?: never;
@@ -879,7 +885,7 @@ export interface paths {
          */
         get: operations["get_3"];
         /** 按配置版本更新官方 GitHub 深度探索设置 */
-        put: operations["update_4"];
+        put: operations["update_2"];
         post?: never;
         delete?: never;
         options?: never;
@@ -2381,70 +2387,6 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/api/v1/notification-email-contact/verify": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        post: operations["verify"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/web/notification-email-contact/verify": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        post: operations["verify_1"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/v1/notification-email-contact/verification-code": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        post: operations["requestCode"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/web/notification-email-contact/verification-code": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        post: operations["requestCode_1"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
     "/api/web/namespaces/{slug}/unfreeze": {
         parameters: {
             query?: never;
@@ -2967,6 +2909,244 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/dsh-plugins/{pluginId}/versions/{versionId}/yank": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Withdraw a plugin version from distribution */
+        post: operations["yankDshPluginVersion"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/web/dsh-plugins/{pluginId}/versions/{versionId}/yank": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Withdraw a plugin version from distribution */
+        post: operations["yankDshPluginVersion_1"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/dsh-plugins/{pluginId}/versions/{versionId}/unyank": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Restore a yanked plugin version */
+        post: operations["unyankDshPluginVersion"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/web/dsh-plugins/{pluginId}/versions/{versionId}/unyank": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Restore a yanked plugin version */
+        post: operations["unyankDshPluginVersion_1"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/web/dsh-plugins/{pluginId}/versions/{versionId}/recommend": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Set the recommended plugin version */
+        post: operations["recommendDshPluginVersion"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/dsh-plugins/{pluginId}/versions/{versionId}/recommend": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Set the recommended plugin version */
+        post: operations["recommendDshPluginVersion_1"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/web/dsh-plugins/{pluginId}/restore": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Restore a hidden plugin to discovery */
+        post: operations["restoreDshPlugin"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/dsh-plugins/{pluginId}/restore": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Restore a hidden plugin to discovery */
+        post: operations["restoreDshPlugin_1"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/dsh-plugins/{pluginId}/hide": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Hide a plugin from discovery */
+        post: operations["hideDshPlugin"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/web/dsh-plugins/{pluginId}/hide": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Hide a plugin from discovery */
+        post: operations["hideDshPlugin_1"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/web/dsh-plugins/{namespace}/publish": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Publish a plugin version into a namespace */
+        post: operations["publishDshPlugin"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/dsh-plugins/{namespace}/publish": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Publish a plugin version into a namespace */
+        post: operations["publishDshPlugin_1"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/web/dsh-plugins/package-preview": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Read a plugin tarball without publishing it */
+        post: operations["previewDshPluginPackage"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/dsh-plugins/package-preview": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Read a plugin tarball without publishing it */
+        post: operations["previewDshPluginPackage_1"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/authoring/runs/{runId}/cancel": {
         parameters: {
             query?: never;
@@ -3073,32 +3253,36 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/api/v1/admin/notification-email-deliveries/{id}/retry": {
+    "/api/web/ai-tools": {
         parameters: {
             query?: never;
             header?: never;
             path?: never;
             cookie?: never;
         };
-        get?: never;
+        /** Browse downloadable AI tools */
+        get: operations["listAiTools"];
         put?: never;
-        post: operations["retry_2"];
+        /** Upload and publish an AI tool */
+        post: operations["publishAiTool"];
         delete?: never;
         options?: never;
         head?: never;
         patch?: never;
         trace?: never;
     };
-    "/api/web/admin/notification-email-deliveries/{id}/retry": {
+    "/api/v1/ai-tools": {
         parameters: {
             query?: never;
             header?: never;
             path?: never;
             cookie?: never;
         };
-        get?: never;
+        /** Browse downloadable AI tools */
+        get: operations["listAiTools_1"];
         put?: never;
-        post: operations["retry_3"];
+        /** Upload and publish an AI tool */
+        post: operations["publishAiTool_1"];
         delete?: never;
         options?: never;
         head?: never;
@@ -3112,7 +3296,7 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        get: operations["list_10"];
+        get: operations["list_8"];
         put?: never;
         post: operations["create_4"];
         delete?: never;
@@ -3435,23 +3619,6 @@ export interface paths {
         get: operations["listRoleGrants"];
         put?: never;
         post: operations["createRoleGrant"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/v1/admin/system-config/presentation/assets": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        /** Upload a public branding image (PNG or JPEG, up to 2 MiB and 1024 pixels per side) */
-        post: operations["upload_2"];
         delete?: never;
         options?: never;
         head?: never;
@@ -3873,7 +4040,7 @@ export interface paths {
             cookie?: never;
         };
         /** 查看系统级公开 GitHub 凭证的脱敏状态 */
-        get: operations["list_13"];
+        get: operations["list_11"];
         put?: never;
         /** 加密保存系统级公开 GitHub 凭证 */
         post: operations["create_5"];
@@ -3909,7 +4076,7 @@ export interface paths {
         };
         get?: never;
         put?: never;
-        post: operations["verify_2"];
+        post: operations["verify"];
         delete?: never;
         options?: never;
         head?: never;
@@ -5136,40 +5303,6 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/api/v1/reviews/scopes": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** List namespace scopes the caller is authorized to review */
-        get: operations["listScopes"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/web/reviews/scopes": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** List namespace scopes the caller is authorized to review */
-        get: operations["listScopes_1"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
     "/api/web/reviews/pending": {
         parameters: {
             query?: never;
@@ -5612,70 +5745,6 @@ export interface paths {
             cookie?: never;
         };
         get: operations["list_5"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/v1/notification-email-deliveries/{id}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["detail"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/web/notification-email-deliveries/{id}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["detail_1"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/v1/notification-email-contact": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["contact"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/web/notification-email-contact": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["contact_1"];
         put?: never;
         post?: never;
         delete?: never;
@@ -6238,6 +6307,244 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/dsh-plugins/{namespace}/{slug}/versions/{version}/download": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Download one exact plugin tarball */
+        get: operations["downloadDshPluginVersion"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/web/dsh-plugins/{namespace}/{slug}/versions/{version}/download": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Download one exact plugin tarball */
+        get: operations["downloadDshPluginVersion_1"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/web/dsh-plugins/{namespace}/{slug}/versions": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** List a plugin's versions */
+        get: operations["listDshPluginVersions"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/dsh-plugins/{namespace}/{slug}/versions": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** List a plugin's versions */
+        get: operations["listDshPluginVersions_1"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/web/dsh-plugins/{namespace}/{slug}/download": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Download the recommended plugin tarball */
+        get: operations["downloadDshPlugin"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/dsh-plugins/{namespace}/{slug}/download": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Download the recommended plugin tarball */
+        get: operations["downloadDshPlugin_1"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/dsh-plugins/{namespace}/{slug}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get one plugin with its version ledger */
+        get: operations["getDshPlugin"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/web/dsh-plugins/{namespace}/{slug}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get one plugin with its version ledger */
+        get: operations["getDshPlugin_1"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/web/dsh-plugins/mine": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** List plugins created or administered by the caller */
+        get: operations["listMyDshPlugins"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/dsh-plugins/mine": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** List plugins created or administered by the caller */
+        get: operations["listMyDshPlugins_1"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/web/dsh-plugins/categories": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** List plugin categories with counts */
+        get: operations["listDshPluginCategories"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/dsh-plugins/categories": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** List plugin categories with counts */
+        get: operations["listDshPluginCategories_1"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/web/dsh-plugins": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Browse hosted DSH plugins */
+        get: operations["listDshPlugins"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/dsh-plugins": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Browse hosted DSH plugins */
+        get: operations["listDshPlugins_1"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/web/authoring/runs/{runId}/findings": {
         parameters: {
             query?: never;
@@ -6444,14 +6751,15 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/api/web/admin/notification-email-deliveries": {
+    "/api/v1/ai-tools/{id}/download": {
         parameters: {
             query?: never;
             header?: never;
             path?: never;
             cookie?: never;
         };
-        get: operations["list_8"];
+        /** Download an AI tool file */
+        get: operations["downloadAiTool"];
         put?: never;
         post?: never;
         delete?: never;
@@ -6460,14 +6768,49 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/api/v1/admin/notification-email-deliveries": {
+    "/api/web/ai-tools/{id}/download": {
         parameters: {
             query?: never;
             header?: never;
             path?: never;
             cookie?: never;
         };
-        get: operations["list_9"];
+        /** Download an AI tool file */
+        get: operations["downloadAiTool_1"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/ai-tools/categories": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** List AI tool categories with counts */
+        get: operations["listAiToolCategories"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/web/ai-tools/categories": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** List AI tool categories with counts */
+        get: operations["listAiToolCategories_1"];
         put?: never;
         post?: never;
         delete?: never;
@@ -6519,40 +6862,6 @@ export interface paths {
         put?: never;
         post?: never;
         delete: operations["deleteSkill_2"];
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/v1/site-presentation": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** Read public site presentation settings */
-        get: operations["current_2"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/v1/site-presentation/assets/{assetId}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** Read a normalized public branding image */
-        get: operations["asset"];
-        put?: never;
-        post?: never;
-        delete?: never;
         options?: never;
         head?: never;
         patch?: never;
@@ -6821,7 +7130,7 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        get: operations["list_11"];
+        get: operations["list_9"];
         put?: never;
         post?: never;
         delete?: never;
@@ -7073,7 +7382,7 @@ export interface paths {
             cookie?: never;
         };
         /** 查看 GitHub 发现规则与精选入口 */
-        get: operations["list_12"];
+        get: operations["list_10"];
         put?: never;
         post?: never;
         delete?: never;
@@ -7459,6 +7768,40 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/dsh-plugins/{pluginId}/versions/{versionId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /** Delete a plugin version and its tarball */
+        delete: operations["deleteDshPluginVersion"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/web/dsh-plugins/{pluginId}/versions/{versionId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /** Delete a plugin version and its tarball */
+        delete: operations["deleteDshPluginVersion_1"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/tokens/{id}": {
         parameters: {
             query?: never;
@@ -7713,22 +8056,6 @@ export interface components {
             channel?: string;
             enabled?: boolean;
         };
-        NotificationEmailPreferenceResponse: {
-            category?: string;
-            mode?: string;
-        };
-        NotificationEmailPreferenceUpdateRequest: {
-            preferences?: components["schemas"]["NotificationEmailPreferenceResponse"][];
-        };
-        ApiResponseListNotificationEmailPreferenceResponse: {
-            /** Format: int32 */
-            code?: number;
-            msg?: string;
-            data?: components["schemas"]["NotificationEmailPreferenceResponse"][];
-            /** Format: date-time */
-            timestamp?: string;
-            requestId?: string;
-        };
         UpdateMemberRoleRequest: {
             /** @enum {string} */
             role: "OWNER" | "ADMIN" | "MEMBER";
@@ -7857,6 +8184,84 @@ export interface components {
             sourceId?: number;
             ignorePatterns?: string[];
         };
+        DshPluginUpdateRequest: {
+            displayName?: string;
+            summary?: string;
+            description?: string;
+            homepage?: string;
+            license?: string;
+            category?: string;
+            tags?: string[];
+        };
+        ApiResponseDshPluginDetailResponse: {
+            /** Format: int32 */
+            code?: number;
+            msg?: string;
+            data?: components["schemas"]["DshPluginDetailResponse"];
+            /** Format: date-time */
+            timestamp?: string;
+            requestId?: string;
+        };
+        DshPluginDetailResponse: {
+            /** Format: int64 */
+            id?: number;
+            /** Format: int64 */
+            namespaceId?: number;
+            namespace?: string;
+            namespaceDisplayName?: string;
+            slug?: string;
+            packageName?: string;
+            displayName?: string;
+            summary?: string;
+            description?: string;
+            homepage?: string;
+            license?: string;
+            category?: string;
+            tags?: string[];
+            status?: string;
+            hidden?: boolean;
+            /** Format: int64 */
+            latestVersionId?: number;
+            latestVersion?: string;
+            /** Format: int64 */
+            downloadCount?: number;
+            createdBy?: string;
+            createdByName?: string;
+            /** Format: date-time */
+            createdAt?: string;
+            /** Format: date-time */
+            updatedAt?: string;
+            allowedActions?: ("PUBLISH_VERSION" | "UPDATE_METADATA" | "YANK_VERSION" | "UNYANK_VERSION" | "DELETE_VERSION" | "RECOMMEND_VERSION" | "HIDE" | "RESTORE")[];
+            versions?: components["schemas"]["DshPluginVersionResponse"][];
+        };
+        DshPluginVersionResponse: {
+            /** Format: int64 */
+            id?: number;
+            version?: string;
+            status?: string;
+            sha256?: string;
+            /** Format: int64 */
+            sizeBytes?: number;
+            capabilities?: string[];
+            engines?: {
+                [key: string]: string;
+            };
+            peerDependencies?: {
+                [key: string]: string;
+            };
+            compatNote?: string;
+            releaseNotes?: string;
+            /** Format: int64 */
+            downloadCount?: number;
+            /** Format: date-time */
+            publishedAt?: string;
+            publishedBy?: string;
+            /** Format: date-time */
+            yankedAt?: string;
+            yankedBy?: string;
+            yankReason?: string;
+            recommended?: boolean;
+        };
         SaveDraftFileRequest: {
             path: string;
             content: string;
@@ -7917,6 +8322,43 @@ export interface components {
             file?: components["schemas"]["DraftFileResponse"];
             created?: boolean;
             revisionAdvanced?: boolean;
+        };
+        AiToolUpdateRequest: {
+            name?: string;
+            version?: string;
+            summary?: string;
+            usageInstructions?: string;
+            category?: string;
+        };
+        AiToolDetailResponse: {
+            /** Format: int64 */
+            id?: number;
+            name?: string;
+            version?: string;
+            summary?: string;
+            usageInstructions?: string;
+            category?: string;
+            filename?: string;
+            contentType?: string;
+            /** Format: int64 */
+            sizeBytes?: number;
+            sha256?: string;
+            /** Format: int64 */
+            downloadCount?: number;
+            createdBy?: string;
+            /** Format: date-time */
+            createdAt?: string;
+            /** Format: date-time */
+            updatedAt?: string;
+        };
+        ApiResponseAiToolDetailResponse: {
+            /** Format: int32 */
+            code?: number;
+            msg?: string;
+            data?: components["schemas"]["AiToolDetailResponse"];
+            /** Format: date-time */
+            timestamp?: string;
+            requestId?: string;
         };
         TokenExpirationUpdateRequest: {
             expiresAt?: string;
@@ -7988,73 +8430,6 @@ export interface components {
             version?: number;
             /** Format: date-time */
             updatedAt?: string;
-        };
-        SitePresentationSection: {
-            enabled: boolean;
-            texts: {
-                [key: string]: {
-                    [key: string]: string;
-                };
-            };
-            items?: {
-                [key: string]: boolean | null;
-            } | null;
-        };
-        SitePresentationSettings: {
-            siteName?: string | null;
-            logoUrl?: string | null;
-            faviconUrl?: string | null;
-            sections: {
-                [key: string]: components["schemas"]["SitePresentationSection"];
-            };
-            links: {
-                [key: string]: string;
-            };
-        };
-        SitePresentationUpdateRequest: {
-            settings: components["schemas"]["SitePresentationSettings"];
-            /** Format: int64 */
-            version: number;
-        };
-        ApiResponseSitePresentationResponse: {
-            /** Format: int32 */
-            code?: number;
-            msg?: string;
-            data?: components["schemas"]["SitePresentationResponse"];
-            /** Format: date-time */
-            timestamp?: string;
-            requestId?: string;
-        };
-        SitePresentationResponse: {
-            settings: components["schemas"]["SitePresentationSettings"];
-            /** Format: int64 */
-            version: number;
-        };
-        NotificationEmailSettingsUpdateRequest: {
-            enabled?: boolean;
-            /** Format: int32 */
-            digestWindowMinutes?: number;
-            publicBaseUrl?: string;
-            /** Format: int64 */
-            version?: number;
-        };
-        ApiResponseNotificationEmailSettingsResponse: {
-            /** Format: int32 */
-            code?: number;
-            msg?: string;
-            data?: components["schemas"]["NotificationEmailSettingsResponse"];
-            /** Format: date-time */
-            timestamp?: string;
-            requestId?: string;
-        };
-        NotificationEmailSettingsResponse: {
-            enabled?: boolean;
-            /** Format: int32 */
-            digestWindowMinutes?: number;
-            publicBaseUrl?: string;
-            /** Format: int64 */
-            version?: number;
-            smtpConfigured?: boolean;
         };
         AvatarReviewSettingsUpdateRequest: {
             machineEnabled?: boolean;
@@ -8613,8 +8988,6 @@ export interface components {
             name?: string;
             displayName?: string;
             description?: string;
-            shortDescription?: string;
-            overview?: string;
             version?: string;
             /** @enum {string} */
             examplesStatus?: "ready" | "none" | "invalid";
@@ -8678,10 +9051,6 @@ export interface components {
             previousVisibility?: string;
             requestedVisibility?: string;
             originType?: string;
-            displayName?: string;
-            summary?: string;
-            reviewKind?: string;
-            canReview?: boolean;
         };
         ReviewTaskRequest: {
             /** Format: int64 */
@@ -8783,30 +9152,6 @@ export interface components {
             /** Format: int64 */
             sourceSkillId?: number;
             reason?: string;
-        };
-        VerifyRequest: {
-            code?: string;
-        };
-        ApiResponseNotificationEmailContactResponse: {
-            /** Format: int32 */
-            code?: number;
-            msg?: string;
-            data?: components["schemas"]["NotificationEmailContactResponse"];
-            /** Format: date-time */
-            timestamp?: string;
-            requestId?: string;
-        };
-        NotificationEmailContactResponse: {
-            email?: string | null;
-            verified?: boolean;
-            available?: boolean;
-            locale?: string;
-            /** Format: date-time */
-            resendAvailableAt?: string | null;
-            reason?: string | null;
-        };
-        CodeRequest: {
-            locale?: string;
         };
         TransferOwnershipRequest: {
             newOwnerId: string;
@@ -8973,6 +9318,55 @@ export interface components {
             createdAt?: string;
             readAt?: string;
         };
+        DshPluginYankRequest: {
+            reason?: string;
+        };
+        ApiResponseDshPluginPublishResponse: {
+            /** Format: int32 */
+            code?: number;
+            msg?: string;
+            data?: components["schemas"]["DshPluginPublishResponse"];
+            /** Format: date-time */
+            timestamp?: string;
+            requestId?: string;
+        };
+        DshPluginPublishResponse: {
+            /** Format: int64 */
+            pluginId?: number;
+            namespace?: string;
+            slug?: string;
+            packageName?: string;
+            version?: string;
+            status?: string;
+            newPlugin?: boolean;
+        };
+        ApiResponseDshPluginPackagePreviewResponse: {
+            /** Format: int32 */
+            code?: number;
+            msg?: string;
+            data?: components["schemas"]["DshPluginPackagePreviewResponse"];
+            /** Format: date-time */
+            timestamp?: string;
+            requestId?: string;
+        };
+        DshPluginPackagePreviewResponse: {
+            packageName?: string;
+            version?: string;
+            description?: string;
+            license?: string;
+            homepage?: string;
+            engines?: {
+                [key: string]: string;
+            };
+            peerDependencies?: {
+                [key: string]: string;
+            };
+            capabilities?: string[];
+            newPlugin?: boolean;
+            existingNamespace?: string;
+            existingSlug?: string;
+            versionExists?: boolean;
+        };
         ApiResponseValidationRunResponse: {
             /** Format: int32 */
             code?: number;
@@ -9022,8 +9416,20 @@ export interface components {
             timestamp?: string;
             requestId?: string;
         };
-        NotificationEmailRetryRequest: {
-            confirmDuplicateRisk?: boolean;
+        AiToolPublishResponse: {
+            /** Format: int64 */
+            id?: number;
+            name?: string;
+            filename?: string;
+        };
+        ApiResponseAiToolPublishResponse: {
+            /** Format: int32 */
+            code?: number;
+            msg?: string;
+            data?: components["schemas"]["AiToolPublishResponse"];
+            /** Format: date-time */
+            timestamp?: string;
+            requestId?: string;
         };
         TokenCreateRequest: {
             name: string;
@@ -9150,18 +9556,6 @@ export interface components {
             providerCode: string;
             email: string;
             roleCode: string;
-        };
-        ApiResponseSitePresentationAssetResponse: {
-            /** Format: int32 */
-            code?: number;
-            msg?: string;
-            data?: components["schemas"]["SitePresentationAssetResponse"];
-            /** Format: date-time */
-            timestamp?: string;
-            requestId?: string;
-        };
-        SitePresentationAssetResponse: {
-            url: string;
         };
         AdminSkillMutationResponse: {
             /** Format: int64 */
@@ -9996,22 +10390,6 @@ export interface components {
             readyForApproval?: boolean;
             removal?: boolean;
         };
-        ReviewComparison: {
-            baseVersion?: string;
-            baseline?: components["schemas"]["ReviewPresentation"];
-            current?: components["schemas"]["ReviewPresentation"];
-            files?: components["schemas"]["ReviewFileChange"][];
-        };
-        ReviewFileChange: {
-            path?: string;
-            changeType?: string;
-        };
-        ReviewPresentation: {
-            displayName?: string;
-            summary?: string;
-            overview?: string;
-            overviewSource?: string;
-        };
         ReviewSkillDetailResponse: {
             skill?: components["schemas"]["SkillDetailResponse"];
             versions?: components["schemas"]["SkillVersionResponse"][];
@@ -10022,8 +10400,6 @@ export interface components {
             activeVersion?: string;
             avatarChange?: components["schemas"]["AvatarChange"];
             visibilityChange?: components["schemas"]["VisibilityChange"];
-            presentation?: components["schemas"]["ReviewPresentation"];
-            comparison?: components["schemas"]["ReviewComparison"];
         };
         VisibilityChange: {
             previousVisibility?: string;
@@ -10127,21 +10503,6 @@ export interface components {
             page?: number;
             /** Format: int32 */
             size?: number;
-        };
-        ApiResponseListReviewScopeResponse: {
-            /** Format: int32 */
-            code?: number;
-            msg?: string;
-            data?: components["schemas"]["ReviewScopeResponse"][];
-            /** Format: date-time */
-            timestamp?: string;
-            requestId?: string;
-        };
-        ReviewScopeResponse: {
-            /** Format: int64 */
-            id?: number;
-            slug?: string;
-            displayName?: string;
         };
         ApiResponsePageResponseReviewTaskResponse: {
             /** Format: int32 */
@@ -10355,44 +10716,6 @@ export interface components {
             page?: number;
             /** Format: int32 */
             size?: number;
-        };
-        ApiResponseNotificationEmailDeliveryDetailResponse: {
-            /** Format: int32 */
-            code?: number;
-            msg?: string;
-            data?: components["schemas"]["NotificationEmailDeliveryDetailResponse"];
-            /** Format: date-time */
-            timestamp?: string;
-            requestId?: string;
-        };
-        NotificationEmailDeliveryDetailResponse: {
-            /** Format: int64 */
-            id?: number;
-            status?: string;
-            kind?: string;
-            /** Format: date-time */
-            createdAt?: string;
-            /** Format: date-time */
-            acceptedAt?: string | null;
-            items?: components["schemas"]["NotificationEmailDeliveryItemResponse"][];
-            /** Format: int64 */
-            totalItems?: number;
-            /** Format: int64 */
-            unavailableCount?: number;
-            /** Format: int32 */
-            size?: number;
-            nextCursor?: string | null;
-            /** Format: int64 */
-            mergedIntoDeliveryId?: number | null;
-        };
-        NotificationEmailDeliveryItemResponse: {
-            /** Format: int64 */
-            id?: number;
-            category?: string;
-            eventType?: string;
-            /** Format: date-time */
-            occurredAt?: string;
-            targetPath?: string;
         };
         Pageable: {
             /** Format: int32 */
@@ -10898,6 +11221,73 @@ export interface components {
             /** Format: int32 */
             size?: number;
         };
+        ApiResponseListDshPluginVersionResponse: {
+            /** Format: int32 */
+            code?: number;
+            msg?: string;
+            data?: components["schemas"]["DshPluginVersionResponse"][];
+            /** Format: date-time */
+            timestamp?: string;
+            requestId?: string;
+        };
+        ApiResponsePageResponseDshPluginSummaryResponse: {
+            /** Format: int32 */
+            code?: number;
+            msg?: string;
+            data?: components["schemas"]["PageResponseDshPluginSummaryResponse"];
+            /** Format: date-time */
+            timestamp?: string;
+            requestId?: string;
+        };
+        DshPluginSummaryResponse: {
+            /** Format: int64 */
+            id?: number;
+            namespace?: string;
+            namespaceDisplayName?: string;
+            slug?: string;
+            packageName?: string;
+            displayName?: string;
+            summary?: string;
+            category?: string;
+            tags?: string[];
+            latestVersion?: string;
+            /** Format: date-time */
+            latestPublishedAt?: string;
+            /** Format: int64 */
+            versionCount?: number;
+            /** Format: int64 */
+            downloadCount?: number;
+            hidden?: boolean;
+            createdBy?: string;
+            createdByName?: string;
+            /** Format: date-time */
+            createdAt?: string;
+            /** Format: date-time */
+            updatedAt?: string;
+        };
+        PageResponseDshPluginSummaryResponse: {
+            items?: components["schemas"]["DshPluginSummaryResponse"][];
+            /** Format: int64 */
+            total?: number;
+            /** Format: int32 */
+            page?: number;
+            /** Format: int32 */
+            size?: number;
+        };
+        ApiResponseListDshPluginCategoryResponse: {
+            /** Format: int32 */
+            code?: number;
+            msg?: string;
+            data?: components["schemas"]["DshPluginCategoryResponse"][];
+            /** Format: date-time */
+            timestamp?: string;
+            requestId?: string;
+        };
+        DshPluginCategoryResponse: {
+            name?: string;
+            /** Format: int64 */
+            count?: number;
+        };
         ApiResponseListValidationFindingResponse: {
             /** Format: int32 */
             code?: number;
@@ -11008,41 +11398,56 @@ export interface components {
             timestamp?: string;
             requestId?: string;
         };
-        ApiResponseNotificationEmailDeliveryAdminPageResponse: {
+        AiToolCategoryResponse: {
+            category?: string;
+            /** Format: int64 */
+            count?: number;
+        };
+        ApiResponseListAiToolCategoryResponse: {
             /** Format: int32 */
             code?: number;
             msg?: string;
-            data?: components["schemas"]["NotificationEmailDeliveryAdminPageResponse"];
+            data?: components["schemas"]["AiToolCategoryResponse"][];
             /** Format: date-time */
             timestamp?: string;
             requestId?: string;
         };
-        NotificationEmailDeliveryAdminPageResponse: {
-            items?: components["schemas"]["NotificationEmailDeliveryAdminResponse"][];
+        AiToolSummaryResponse: {
             /** Format: int64 */
-            totalItems?: number;
+            id?: number;
+            name?: string;
+            version?: string;
+            summary?: string;
+            category?: string;
+            filename?: string;
+            contentType?: string;
+            /** Format: int64 */
+            sizeBytes?: number;
+            /** Format: int64 */
+            downloadCount?: number;
+            createdBy?: string;
+            /** Format: date-time */
+            createdAt?: string;
+            /** Format: date-time */
+            updatedAt?: string;
+        };
+        ApiResponsePageResponseAiToolSummaryResponse: {
+            /** Format: int32 */
+            code?: number;
+            msg?: string;
+            data?: components["schemas"]["PageResponseAiToolSummaryResponse"];
+            /** Format: date-time */
+            timestamp?: string;
+            requestId?: string;
+        };
+        PageResponseAiToolSummaryResponse: {
+            items?: components["schemas"]["AiToolSummaryResponse"][];
+            /** Format: int64 */
+            total?: number;
             /** Format: int32 */
             page?: number;
             /** Format: int32 */
             size?: number;
-            /** Format: int32 */
-            totalPages?: number;
-        };
-        NotificationEmailDeliveryAdminResponse: {
-            /** Format: int64 */
-            id?: number;
-            recipientId?: string;
-            kind?: string;
-            status?: string;
-            /** Format: int32 */
-            attempts?: number;
-            resultCode?: string | null;
-            /** Format: date-time */
-            createdAt?: string;
-            /** Format: date-time */
-            acceptedAt?: string | null;
-            /** Format: int64 */
-            mergedIntoDeliveryId?: number | null;
         };
         ClawHubWhoamiResponse: {
             user?: components["schemas"]["User"];
@@ -13231,94 +13636,6 @@ export interface operations {
             };
         };
     };
-    preferences_2: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["ApiResponseListNotificationEmailPreferenceResponse"];
-                };
-            };
-        };
-    };
-    preferences: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["NotificationEmailPreferenceUpdateRequest"];
-            };
-        };
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["ApiResponseListNotificationEmailPreferenceResponse"];
-                };
-            };
-        };
-    };
-    preferences_3: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["ApiResponseListNotificationEmailPreferenceResponse"];
-                };
-            };
-        };
-    };
-    preferences_1: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["NotificationEmailPreferenceUpdateRequest"];
-            };
-        };
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["ApiResponseListNotificationEmailPreferenceResponse"];
-                };
-            };
-        };
-    };
     updateMemberRole: {
         parameters: {
             query?: never;
@@ -13721,6 +14038,58 @@ export interface operations {
             };
         };
     };
+    updateDshPlugin: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                pluginId: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["DshPluginUpdateRequest"];
+            };
+        };
+        responses: {
+            /** @description Plugin updated */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["ApiResponseDshPluginDetailResponse"];
+                };
+            };
+        };
+    };
+    updateDshPlugin_1: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                pluginId: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["DshPluginUpdateRequest"];
+            };
+        };
+        responses: {
+            /** @description Plugin updated */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["ApiResponseDshPluginDetailResponse"];
+                };
+            };
+        };
+    };
     listDraftFiles: {
         parameters: {
             query?: never;
@@ -13867,6 +14236,146 @@ export interface operations {
             };
         };
     };
+    getAiTool: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["ApiResponseAiToolDetailResponse"];
+                };
+            };
+        };
+    };
+    updateAiTool: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["AiToolUpdateRequest"];
+            };
+        };
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["ApiResponseAiToolDetailResponse"];
+                };
+            };
+        };
+    };
+    deleteAiTool: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["ApiResponseVoid"];
+                };
+            };
+        };
+    };
+    getAiTool_1: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["ApiResponseAiToolDetailResponse"];
+                };
+            };
+        };
+    };
+    updateAiTool_1: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["AiToolUpdateRequest"];
+            };
+        };
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["ApiResponseAiToolDetailResponse"];
+                };
+            };
+        };
+    };
+    deleteAiTool_1: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["ApiResponseVoid"];
+                };
+            };
+        };
+    };
     updateExpiration: {
         parameters: {
             query?: never;
@@ -13995,95 +14504,7 @@ export interface operations {
             };
         };
     };
-    current_3: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["ApiResponseSitePresentationResponse"];
-                };
-            };
-        };
-    };
-    update: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["SitePresentationUpdateRequest"];
-            };
-        };
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["ApiResponseSitePresentationResponse"];
-                };
-            };
-        };
-    };
-    current_4: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["ApiResponseNotificationEmailSettingsResponse"];
-                };
-            };
-        };
-    };
-    update_1: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["NotificationEmailSettingsUpdateRequest"];
-            };
-        };
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["ApiResponseNotificationEmailSettingsResponse"];
-                };
-            };
-        };
-    };
-    current_5: {
+    current_2: {
         parameters: {
             query?: never;
             header?: never;
@@ -14103,7 +14524,7 @@ export interface operations {
             };
         };
     };
-    update_2: {
+    update: {
         parameters: {
             query?: never;
             header?: never;
@@ -14382,7 +14803,7 @@ export interface operations {
             };
         };
     };
-    update_3: {
+    update_1: {
         parameters: {
             query?: never;
             header?: never;
@@ -14478,7 +14899,7 @@ export interface operations {
             };
         };
     };
-    update_4: {
+    update_2: {
         parameters: {
             query?: never;
             header?: never;
@@ -16257,9 +16678,6 @@ export interface operations {
                 avatarUploadId?: string;
                 expectedSlug?: string;
                 displayName?: string;
-                shortDescription?: string;
-                overview?: string;
-                resetPresentation?: boolean;
             };
             header?: never;
             path: {
@@ -16296,9 +16714,6 @@ export interface operations {
                 avatarUploadId?: string;
                 expectedSlug?: string;
                 displayName?: string;
-                shortDescription?: string;
-                overview?: string;
-                resetPresentation?: boolean;
             };
             header?: never;
             path: {
@@ -16584,12 +16999,9 @@ export interface operations {
     };
     listReviews: {
         parameters: {
-            query?: {
-                status?: string;
+            query: {
+                status: string;
                 namespaceId?: number;
-                q?: string;
-                reviewKind?: string;
-                originType?: string;
                 page?: number;
                 size?: number;
                 sortDirection?: string;
@@ -16637,12 +17049,9 @@ export interface operations {
     };
     listReviews_1: {
         parameters: {
-            query?: {
-                status?: string;
+            query: {
+                status: string;
                 namespaceId?: number;
-                q?: string;
-                reviewKind?: string;
-                originType?: string;
                 page?: number;
                 size?: number;
                 sortDirection?: string;
@@ -17092,102 +17501,6 @@ export interface operations {
                 };
                 content: {
                     "*/*": components["schemas"]["ApiResponsePromotionRevocationResponse"];
-                };
-            };
-        };
-    };
-    verify: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["VerifyRequest"];
-            };
-        };
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["ApiResponseNotificationEmailContactResponse"];
-                };
-            };
-        };
-    };
-    verify_1: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["VerifyRequest"];
-            };
-        };
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["ApiResponseNotificationEmailContactResponse"];
-                };
-            };
-        };
-    };
-    requestCode: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["CodeRequest"];
-            };
-        };
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["ApiResponseNotificationEmailContactResponse"];
-                };
-            };
-        };
-    };
-    requestCode_1: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["CodeRequest"];
-            };
-        };
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["ApiResponseNotificationEmailContactResponse"];
                 };
             };
         };
@@ -18210,6 +18523,376 @@ export interface operations {
             };
         };
     };
+    yankDshPluginVersion: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                pluginId: number;
+                versionId: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": components["schemas"]["DshPluginYankRequest"];
+            };
+        };
+        responses: {
+            /** @description Version yanked */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["ApiResponseDshPluginDetailResponse"];
+                };
+            };
+        };
+    };
+    yankDshPluginVersion_1: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                pluginId: number;
+                versionId: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": components["schemas"]["DshPluginYankRequest"];
+            };
+        };
+        responses: {
+            /** @description Version yanked */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["ApiResponseDshPluginDetailResponse"];
+                };
+            };
+        };
+    };
+    unyankDshPluginVersion: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                pluginId: number;
+                versionId: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Version restored */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["ApiResponseDshPluginDetailResponse"];
+                };
+            };
+        };
+    };
+    unyankDshPluginVersion_1: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                pluginId: number;
+                versionId: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Version restored */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["ApiResponseDshPluginDetailResponse"];
+                };
+            };
+        };
+    };
+    recommendDshPluginVersion: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                pluginId: number;
+                versionId: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Recommended version changed */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["ApiResponseDshPluginDetailResponse"];
+                };
+            };
+        };
+    };
+    recommendDshPluginVersion_1: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                pluginId: number;
+                versionId: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Recommended version changed */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["ApiResponseDshPluginDetailResponse"];
+                };
+            };
+        };
+    };
+    restoreDshPlugin: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                pluginId: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Plugin restored */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["ApiResponseDshPluginDetailResponse"];
+                };
+            };
+        };
+    };
+    restoreDshPlugin_1: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                pluginId: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Plugin restored */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["ApiResponseDshPluginDetailResponse"];
+                };
+            };
+        };
+    };
+    hideDshPlugin: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                pluginId: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Plugin hidden */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["ApiResponseDshPluginDetailResponse"];
+                };
+            };
+        };
+    };
+    hideDshPlugin_1: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                pluginId: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Plugin hidden */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["ApiResponseDshPluginDetailResponse"];
+                };
+            };
+        };
+    };
+    publishDshPlugin: {
+        parameters: {
+            query?: {
+                displayName?: string;
+                summary?: string;
+                description?: string;
+                homepage?: string;
+                license?: string;
+                category?: string;
+                tags?: string;
+                compatNote?: string;
+                releaseNotes?: string;
+            };
+            header?: never;
+            path: {
+                namespace: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "multipart/form-data": {
+                    /** Format: binary */
+                    file: string;
+                };
+            };
+        };
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["ApiResponseDshPluginPublishResponse"];
+                };
+            };
+        };
+    };
+    publishDshPlugin_1: {
+        parameters: {
+            query?: {
+                displayName?: string;
+                summary?: string;
+                description?: string;
+                homepage?: string;
+                license?: string;
+                category?: string;
+                tags?: string;
+                compatNote?: string;
+                releaseNotes?: string;
+            };
+            header?: never;
+            path: {
+                namespace: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "multipart/form-data": {
+                    /** Format: binary */
+                    file: string;
+                };
+            };
+        };
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["ApiResponseDshPluginPublishResponse"];
+                };
+            };
+        };
+    };
+    previewDshPluginPackage: {
+        parameters: {
+            query: {
+                namespace: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "multipart/form-data": {
+                    /** Format: binary */
+                    file: string;
+                };
+            };
+        };
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["ApiResponseDshPluginPackagePreviewResponse"];
+                };
+            };
+        };
+    };
+    previewDshPluginPackage_1: {
+        parameters: {
+            query: {
+                namespace: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "multipart/form-data": {
+                    /** Format: binary */
+                    file: string;
+                };
+            };
+        };
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["ApiResponseDshPluginPackagePreviewResponse"];
+                };
+            };
+        };
+    };
     cancelValidationRun: {
         parameters: {
             query?: never;
@@ -18430,18 +19113,51 @@ export interface operations {
             };
         };
     };
-    retry_2: {
+    listAiTools: {
         parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                id: number;
+            query?: {
+                q?: string;
+                category?: string;
+                sort?: string;
+                page?: number;
+                size?: number;
             };
+            header?: never;
+            path?: never;
             cookie?: never;
         };
-        requestBody: {
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["ApiResponsePageResponseAiToolSummaryResponse"];
+                };
+            };
+        };
+    };
+    publishAiTool: {
+        parameters: {
+            query: {
+                name: string;
+                version?: string;
+                summary?: string;
+                usageInstructions?: string;
+                category?: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: {
             content: {
-                "application/json": components["schemas"]["NotificationEmailRetryRequest"];
+                "multipart/form-data": {
+                    /** Format: binary */
+                    file: string;
+                };
             };
         };
         responses: {
@@ -18451,23 +19167,56 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "*/*": components["schemas"]["ApiResponseVoid"];
+                    "*/*": components["schemas"]["ApiResponseAiToolPublishResponse"];
                 };
             };
         };
     };
-    retry_3: {
+    listAiTools_1: {
         parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                id: number;
+            query?: {
+                q?: string;
+                category?: string;
+                sort?: string;
+                page?: number;
+                size?: number;
             };
+            header?: never;
+            path?: never;
             cookie?: never;
         };
-        requestBody: {
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["ApiResponsePageResponseAiToolSummaryResponse"];
+                };
+            };
+        };
+    };
+    publishAiTool_1: {
+        parameters: {
+            query: {
+                name: string;
+                version?: string;
+                summary?: string;
+                usageInstructions?: string;
+                category?: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: {
             content: {
-                "application/json": components["schemas"]["NotificationEmailRetryRequest"];
+                "multipart/form-data": {
+                    /** Format: binary */
+                    file: string;
+                };
             };
         };
         responses: {
@@ -18477,12 +19226,12 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "*/*": components["schemas"]["ApiResponseVoid"];
+                    "*/*": components["schemas"]["ApiResponseAiToolPublishResponse"];
                 };
             };
         };
     };
-    list_10: {
+    list_8: {
         parameters: {
             query?: {
                 page?: number;
@@ -19062,33 +19811,6 @@ export interface operations {
                 };
                 content: {
                     "*/*": components["schemas"]["ApiResponseExternalRoleGrantRuleResponse"];
-                };
-            };
-        };
-    };
-    upload_2: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: {
-            content: {
-                "multipart/form-data": {
-                    /** Format: binary */
-                    file: string;
-                };
-            };
-        };
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["ApiResponseSitePresentationAssetResponse"];
                 };
             };
         };
@@ -19746,7 +20468,7 @@ export interface operations {
             };
         };
     };
-    list_13: {
+    list_11: {
         parameters: {
             query?: never;
             header?: never;
@@ -19816,7 +20538,7 @@ export interface operations {
             };
         };
     };
-    verify_2: {
+    verify: {
         parameters: {
             query?: never;
             header?: never;
@@ -21797,46 +22519,6 @@ export interface operations {
             };
         };
     };
-    listScopes: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["ApiResponseListReviewScopeResponse"];
-                };
-            };
-        };
-    };
-    listScopes_1: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["ApiResponseListReviewScopeResponse"];
-                };
-            };
-        };
-    };
     listPendingReviews: {
         parameters: {
             query: {
@@ -22475,96 +23157,6 @@ export interface operations {
                 };
                 content: {
                     "*/*": components["schemas"]["ApiResponsePageResponseNotificationResponse"];
-                };
-            };
-        };
-    };
-    detail: {
-        parameters: {
-            query?: {
-                cursor?: string;
-                size?: number;
-            };
-            header?: never;
-            path: {
-                id: number;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["ApiResponseNotificationEmailDeliveryDetailResponse"];
-                };
-            };
-        };
-    };
-    detail_1: {
-        parameters: {
-            query?: {
-                cursor?: string;
-                size?: number;
-            };
-            header?: never;
-            path: {
-                id: number;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["ApiResponseNotificationEmailDeliveryDetailResponse"];
-                };
-            };
-        };
-    };
-    contact: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["ApiResponseNotificationEmailContactResponse"];
-                };
-            };
-        };
-    };
-    contact_1: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["ApiResponseNotificationEmailContactResponse"];
                 };
             };
         };
@@ -23367,6 +23959,334 @@ export interface operations {
             };
         };
     };
+    downloadDshPluginVersion: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                namespace: string;
+                slug: string;
+                version: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": string;
+                };
+            };
+        };
+    };
+    downloadDshPluginVersion_1: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                namespace: string;
+                slug: string;
+                version: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": string;
+                };
+            };
+        };
+    };
+    listDshPluginVersions: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                namespace: string;
+                slug: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Version ledger returned */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["ApiResponseListDshPluginVersionResponse"];
+                };
+            };
+        };
+    };
+    listDshPluginVersions_1: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                namespace: string;
+                slug: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Version ledger returned */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["ApiResponseListDshPluginVersionResponse"];
+                };
+            };
+        };
+    };
+    downloadDshPlugin: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                namespace: string;
+                slug: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": string;
+                };
+            };
+        };
+    };
+    downloadDshPlugin_1: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                namespace: string;
+                slug: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": string;
+                };
+            };
+        };
+    };
+    getDshPlugin: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                namespace: string;
+                slug: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Plugin returned */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["ApiResponseDshPluginDetailResponse"];
+                };
+            };
+        };
+    };
+    getDshPlugin_1: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                namespace: string;
+                slug: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Plugin returned */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["ApiResponseDshPluginDetailResponse"];
+                };
+            };
+        };
+    };
+    listMyDshPlugins: {
+        parameters: {
+            query?: {
+                q?: string;
+                page?: number;
+                size?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Owned plugin page returned */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["ApiResponsePageResponseDshPluginSummaryResponse"];
+                };
+            };
+        };
+    };
+    listMyDshPlugins_1: {
+        parameters: {
+            query?: {
+                q?: string;
+                page?: number;
+                size?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Owned plugin page returned */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["ApiResponsePageResponseDshPluginSummaryResponse"];
+                };
+            };
+        };
+    };
+    listDshPluginCategories: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Categories returned */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["ApiResponseListDshPluginCategoryResponse"];
+                };
+            };
+        };
+    };
+    listDshPluginCategories_1: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Categories returned */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["ApiResponseListDshPluginCategoryResponse"];
+                };
+            };
+        };
+    };
+    listDshPlugins: {
+        parameters: {
+            query?: {
+                q?: string;
+                category?: string;
+                tag?: string;
+                sort?: string;
+                page?: number;
+                size?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Plugin page returned */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["ApiResponsePageResponseDshPluginSummaryResponse"];
+                };
+            };
+        };
+    };
+    listDshPlugins_1: {
+        parameters: {
+            query?: {
+                q?: string;
+                category?: string;
+                tag?: string;
+                sort?: string;
+                page?: number;
+                size?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Plugin page returned */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["ApiResponsePageResponseDshPluginSummaryResponse"];
+                };
+            };
+        };
+    };
     listValidationFindings: {
         parameters: {
             query?: never;
@@ -23691,15 +24611,13 @@ export interface operations {
             };
         };
     };
-    list_8: {
+    downloadAiTool: {
         parameters: {
-            query?: {
-                status?: string;
-                page?: number;
-                size?: number;
-            };
+            query?: never;
             header?: never;
-            path?: never;
+            path: {
+                id: number;
+            };
             cookie?: never;
         };
         requestBody?: never;
@@ -23710,18 +24628,36 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "*/*": components["schemas"]["ApiResponseNotificationEmailDeliveryAdminPageResponse"];
+                    "*/*": string;
                 };
             };
         };
     };
-    list_9: {
+    downloadAiTool_1: {
         parameters: {
-            query?: {
-                status?: string;
-                page?: number;
-                size?: number;
+            query?: never;
+            header?: never;
+            path: {
+                id: number;
             };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": string;
+                };
+            };
+        };
+    };
+    listAiToolCategories: {
+        parameters: {
+            query?: never;
             header?: never;
             path?: never;
             cookie?: never;
@@ -23734,7 +24670,27 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "*/*": components["schemas"]["ApiResponseNotificationEmailDeliveryAdminPageResponse"];
+                    "*/*": components["schemas"]["ApiResponseListAiToolCategoryResponse"];
+                };
+            };
+        };
+    };
+    listAiToolCategories_1: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["ApiResponseListAiToolCategoryResponse"];
                 };
             };
         };
@@ -23824,48 +24780,6 @@ export interface operations {
                 };
                 content: {
                     "*/*": components["schemas"]["ClawHubDeleteResponse"];
-                };
-            };
-        };
-    };
-    current_2: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["ApiResponseSitePresentationResponse"];
-                };
-            };
-        };
-    };
-    asset: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                assetId: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": string;
                 };
             };
         };
@@ -24228,7 +25142,7 @@ export interface operations {
             };
         };
     };
-    list_11: {
+    list_9: {
         parameters: {
             query?: {
                 status?: string;
@@ -24593,7 +25507,7 @@ export interface operations {
             };
         };
     };
-    list_12: {
+    list_10: {
         parameters: {
             query?: never;
             header?: never;
@@ -25147,6 +26061,52 @@ export interface operations {
                 };
                 content: {
                     "*/*": components["schemas"]["ApiResponseMessageResponse"];
+                };
+            };
+        };
+    };
+    deleteDshPluginVersion: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                pluginId: number;
+                versionId: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Version deleted */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["ApiResponseDshPluginDetailResponse"];
+                };
+            };
+        };
+    };
+    deleteDshPluginVersion_1: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                pluginId: number;
+                versionId: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Version deleted */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["ApiResponseDshPluginDetailResponse"];
                 };
             };
         };

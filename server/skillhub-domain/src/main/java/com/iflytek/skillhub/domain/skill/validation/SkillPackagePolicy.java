@@ -30,8 +30,11 @@ public final class SkillPackagePolicy {
             // Scripts and source code
             ".js", ".cjs", ".mjs", ".ts", ".py", ".sh", ".rb", ".go", ".rs", ".java", ".kt",
             ".lua", ".sql", ".r", ".bat", ".ps1", ".zsh", ".bash",
-            // Images
+            // Images and fonts
             ".png", ".jpg", ".jpeg", ".svg", ".gif", ".webp", ".ico",
+            ".ttf", ".otf", ".woff", ".woff2", ".eot",
+            // Archives used by bundled tooling
+            ".gz", ".tgz",
             // Office documents
             ".doc", ".xls", ".ppt", ".docx", ".xlsx", ".pptx"
     );

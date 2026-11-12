@@ -164,9 +164,9 @@ public class AccountMergeService {
         String secondaryUserId = request.getSecondaryUserId();
         String firstUserId = primaryUserId.compareTo(secondaryUserId) < 0 ? primaryUserId : secondaryUserId;
         String secondUserId = primaryUserId.compareTo(secondaryUserId) < 0 ? secondaryUserId : primaryUserId;
-        UserAccount firstUser = userAccountRepository.findLockedFreshById(firstUserId)
+        UserAccount firstUser = userAccountRepository.findLockedById(firstUserId)
             .orElseThrow(() -> new AuthFlowException(HttpStatus.NOT_FOUND, "error.auth.merge.requestNotFound"));
-        UserAccount secondUser = userAccountRepository.findLockedFreshById(secondUserId)
+        UserAccount secondUser = userAccountRepository.findLockedById(secondUserId)
             .orElseThrow(() -> new AuthFlowException(HttpStatus.NOT_FOUND, "error.auth.merge.requestNotFound"));
         UserAccount primaryUser = firstUser.getId().equals(primaryUserId) ? firstUser : secondUser;
         UserAccount secondaryUser = firstUser.getId().equals(secondaryUserId) ? firstUser : secondUser;

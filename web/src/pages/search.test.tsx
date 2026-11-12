@@ -35,6 +35,10 @@ vi.mock('@/features/auth/use-auth', () => ({
   }),
 }))
 
+vi.mock('@/features/pages/page-content', () => ({
+  usePageHeader: (_key: string, title: string, description: string) => ({ title, description }),
+}))
+
 vi.mock('@/features/search/search-bar', () => ({
   SearchBar: (props: { value?: string; onSearch?: (query: string) => void }) => {
     searchBarProps.push(props)

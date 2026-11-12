@@ -1,6 +1,5 @@
 package com.iflytek.skillhub.repository;
 
-import com.iflytek.skillhub.support.PostgresTestImage;
 import com.iflytek.skillhub.domain.namespace.Namespace;
 import com.iflytek.skillhub.domain.review.*;
 import static org.mockito.Mockito.*;
@@ -47,7 +46,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
         JpaSkillRepositoryAdapter.class, PromotionService.class, ReviewPermissionChecker.class, SkillVisibilityPostgresTest.Configuration.class})
 @Transactional(propagation = Propagation.NOT_SUPPORTED)
 class SkillVisibilityPostgresTest {
-    @Container static final PostgreSQLContainer<?> POSTGRES = new PostgreSQLContainer<>(PostgresTestImage.name());
+    @Container static final PostgreSQLContainer<?> POSTGRES = new PostgreSQLContainer<>("postgres:16-alpine");
     @DynamicPropertySource static void database(DynamicPropertyRegistry registry) {
         registry.add("spring.datasource.url", POSTGRES::getJdbcUrl);
         registry.add("spring.datasource.username", POSTGRES::getUsername);

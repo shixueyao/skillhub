@@ -1,6 +1,5 @@
 package com.iflytek.skillhub.service;
 
-import com.iflytek.skillhub.support.PostgresTestImage;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.iflytek.skillhub.domain.audit.AuditLogService;
 import com.iflytek.skillhub.domain.namespace.Namespace;
@@ -41,7 +40,7 @@ import static org.mockito.Mockito.mock;
 class GithubTeamSourceAppServiceTest {
     @Container
     private static final PostgreSQLContainer<?> POSTGRES =
-            new PostgreSQLContainer<>(PostgresTestImage.name());
+            new PostgreSQLContainer<>("postgres:16-alpine");
 
     @DynamicPropertySource
     static void postgres(DynamicPropertyRegistry registry) {

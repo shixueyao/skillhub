@@ -2,7 +2,6 @@ package com.iflytek.skillhub.domain.skill.service;
 
 import com.iflytek.skillhub.domain.skill.SkillOwnerAccessPolicy;
 import com.iflytek.skillhub.domain.event.SkillVisibilityChangedEvent;
-import com.iflytek.skillhub.domain.event.BusinessEventSnapshot;
 import com.iflytek.skillhub.domain.security.*;
 import com.iflytek.skillhub.domain.namespace.*;
 import com.iflytek.skillhub.domain.review.*;
@@ -143,7 +142,6 @@ public class SkillVisibilityService {
         skill.setVisibility(target);
         skill.setUpdatedBy(actor);
         skills.save(skill);
-        events.publishEvent(new SkillVisibilityChangedEvent(skill.getId(), previous, target,
-                BusinessEventSnapshot.capture(skill, actor, "visibility")));
+        events.publishEvent(new SkillVisibilityChangedEvent(skill.getId(), previous, target));
     }
 }

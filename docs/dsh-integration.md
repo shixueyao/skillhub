@@ -1,5 +1,8 @@
 # DeepSeek Harness 集成指南
 
+> 本文说明「DSH 消费 SkillHub 技能」。如果你要发布和分发 **DSH 插件**，请阅读
+> [DSH 插件托管](./dsh-plugin-hosting.md)。
+
 本文说明如何把 SkillHub 中的技能安装到
 [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness)（CLI 名为 `dsh`）。
 

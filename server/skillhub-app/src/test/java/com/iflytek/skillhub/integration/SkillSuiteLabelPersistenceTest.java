@@ -1,6 +1,5 @@
 package com.iflytek.skillhub.integration;
 
-import com.iflytek.skillhub.support.PostgresTestImage;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import com.iflytek.skillhub.domain.label.LabelDefinition;
@@ -37,7 +36,7 @@ class SkillSuiteLabelPersistenceTest {
 
     @Container
     private static final PostgreSQLContainer<?> POSTGRES =
-            new PostgreSQLContainer<>(PostgresTestImage.name());
+            new PostgreSQLContainer<>("postgres:16-alpine");
 
     @DynamicPropertySource
     static void configurePostgres(DynamicPropertyRegistry registry) {

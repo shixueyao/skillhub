@@ -1,6 +1,5 @@
 package com.iflytek.skillhub.db;
 
-import com.iflytek.skillhub.support.PostgresTestImage;
 import org.flywaydb.core.Flyway;
 import org.junit.jupiter.api.Test;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -15,7 +14,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @Testcontainers
 class GithubMainUpgradeCompatibilityTest {
     @Container
-    static final PostgreSQLContainer<?> POSTGRES = new PostgreSQLContainer<>(PostgresTestImage.name());
+    static final PostgreSQLContainer<?> POSTGRES = new PostgreSQLContainer<>("postgres:16-alpine");
 
     @Test
     void releasedMainDataAndChecksumsSurviveAllSyncMigrations() {

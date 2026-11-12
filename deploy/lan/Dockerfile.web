@@ -1,0 +1,9 @@
+FROM crpi-ptu2rqimrigtq0qx.cn-hangzhou.personal.cr.aliyuncs.com/skill_hub/skillhub-web:pre-dsh
+
+# AI tools may be larger than the image's 100 MB ceiling. Remove the limit in
+# both the packaged config and the template that the entrypoint renders.
+RUN sed -i 's/client_max_body_size 100M/client_max_body_size 0/' \
+    /etc/nginx/conf.d/default.conf \
+    /etc/nginx/templates/default.conf.template
+
+COPY . /usr/share/nginx/html/

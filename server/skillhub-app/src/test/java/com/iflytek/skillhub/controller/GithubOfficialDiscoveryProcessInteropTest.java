@@ -1,6 +1,5 @@
 package com.iflytek.skillhub.controller;
 
-import com.iflytek.skillhub.support.PostgresTestImage;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.iflytek.skillhub.githubsync.GithubOfficialDiscoveryRepository;
 import org.junit.jupiter.api.Test;
@@ -43,7 +42,7 @@ class GithubOfficialDiscoveryProcessInteropTest {
     private static final String SERVICE_TOKEN = "fixture-official-process-service-token-32-chars";
 
     @Container
-    static final PostgreSQLContainer<?> POSTGRES = new PostgreSQLContainer<>(PostgresTestImage.name());
+    static final PostgreSQLContainer<?> POSTGRES = new PostgreSQLContainer<>("postgres:16-alpine");
     @Container
     static final GenericContainer<?> REDIS = new GenericContainer<>("redis:7-alpine").withExposedPorts(6379);
 

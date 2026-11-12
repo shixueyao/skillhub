@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { useNavigate } from '@tanstack/react-router'
 import { useTranslation } from 'react-i18next'
 import { Boxes } from 'lucide-react'
+import { usePageHeader } from '@/features/pages/page-content'
 import { ResourceCard } from '@/features/suite/resource-card'
 import { useResourceSearch } from '@/shared/hooks/use-suite-queries'
 import { useVisibleLabels } from '@/shared/hooks/use-label-queries'
@@ -17,6 +18,7 @@ const PAGE_SIZE = 12
 export function SuitesPage() {
   const navigate = useNavigate()
   const { t } = useTranslation()
+  const header = usePageHeader('suites', t('suite.listTitle'), t('suite.listDescription'))
   const [query, setQuery] = useState('')
   const [queryInput, setQueryInput] = useState('')
   const [selectedLabel, setSelectedLabel] = useState('')
@@ -38,8 +40,8 @@ export function SuitesPage() {
           <div className="mb-2 inline-flex items-center gap-2 text-sm font-medium text-primary">
             <Boxes className="h-4 w-4" /> {t('suite.listTitle')}
           </div>
-          <h1 className="text-4xl font-bold">{t('suite.listTitle')}</h1>
-          <p className="mt-2 text-muted-foreground">{t('suite.listDescription')}</p>
+          <h1 className="text-4xl font-bold">{header.title}</h1>
+          <p className="mt-2 text-muted-foreground">{header.description}</p>
         </div>
         <Button data-analytics-id="suite.create.open" onClick={() => navigate({ to: '/dashboard/suites/new' })}>{t('suite.create')}</Button>
       </div>

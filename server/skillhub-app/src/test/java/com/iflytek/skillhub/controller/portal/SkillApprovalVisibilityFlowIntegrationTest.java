@@ -1,6 +1,5 @@
 package com.iflytek.skillhub.controller.portal;
 
-import com.iflytek.skillhub.support.PostgresTestImage;
 import com.iflytek.skillhub.SkillhubApplication;
 import com.iflytek.skillhub.TestRedisConfig;
 import com.iflytek.skillhub.auth.device.DeviceAuthService;
@@ -70,7 +69,7 @@ class SkillApprovalVisibilityFlowIntegrationTest {
     // execute the generated FOR NO KEY UPDATE statement.
     @Container
     private static final PostgreSQLContainer<?> POSTGRES =
-            new PostgreSQLContainer<>(PostgresTestImage.name());
+            new PostgreSQLContainer<>("postgres:16-alpine");
 
     @DynamicPropertySource
     static void configurePostgres(DynamicPropertyRegistry registry) {

@@ -1,0 +1,40 @@
+# SkillHub LAN overlay
+#
+# 与仓库根目录的 compose.release.yml 叠加使用，不修改官方任何源码/部署文件：
+#   docker compose -p skillhub-lan \
+#     --env-file deploy/lan/env/lan.env \
+#     -f compose.release.yml -f deploy/lan/compose.lan.yml up -d
+#
+# 全部定制通过 bind mount 注入 web 容器，复用 80 端口，不新增容器、不重建镜像：
+#
+#  1. DSH 插件仓库（可写，支持 Web 端发布/删除插件包）
+#     plugins/ -> /srv/dsh-plugins:rw（放在 nginx root 之外，避开官方 entrypoint
+#     对 *.html 的 sed -i 遍历；该目录不在 /usr/share/nginx/html 下，可安全写）
+#     nginx/dsh-plugins.conf -> /etc/nginx/skillhub-base-path-plugins.conf:ro
+#     由镜像模板自带的 include /etc/nginx/skillhub-base-path*.conf 加载
+#     index.json 与 versions/ 的 PUT/DELETE 由 auth_request 校验网站登录态
+#
+#  2. 站点定制层（顶部导航 + 首页内容管理 + 插件市场）
+#     site/ -> /srv/site:rw（content/ 需要 nginx DAV 写入，随目录迁移）
+#     nginx/site.conf -> /etc/nginx/skillhub-base-path-site.conf:ro
+#       - sub_filter 注入 /site/site-auth.js 与 /site/inject.js 到所有 HTML
+#       - /site/.auth-check 内部子请求校验 Java 后端 whoami（网站会话）
+#       - /site/ 静态托管注入脚本与管理界面
+#       - /site/content/ 开放受网站登录态保护的 PUT/DELETE
+#
+# 不再需要 site.htpasswd / siteadmin 独立口令；发布与首页管理统一使用
+# SkillHub 网站账号（BOOTSTRAP_ADMIN_* 或有发布权限的普通账号）。
+#
+# 相对路径以第一个 -f（compose.release.yml，即仓库根目录）为基准。
+
+services:
+  server:
+    environment:
+      SKILLHUB_RATELIMIT_ENABLED: ${SKILLHUB_RATELIMIT_ENABLED:-true}
+
+  web:
+    volumes:
+      - ./deploy/lan/plugins:/srv/dsh-plugins:rw
+      - ./deploy/lan/nginx/dsh-plugins.conf:/etc/nginx/skillhub-base-path-plugins.conf:ro
+      - ./deploy/lan/site:/srv/site:rw
+      - ./deploy/lan/nginx/site.conf:/etc/nginx/skillhub-base-path-site.conf:ro

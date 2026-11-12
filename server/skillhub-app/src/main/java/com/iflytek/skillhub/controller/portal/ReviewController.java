@@ -48,14 +48,6 @@ public class ReviewController extends BaseApiController {
         this.governanceWorkflowAppService = governanceWorkflowAppService;
     }
 
-    @GetMapping("/scopes")
-    @Operation(summary = "List namespace scopes the caller is authorized to review")
-    public ApiResponse<List<com.iflytek.skillhub.dto.ReviewScopeResponse>> listScopes(
-            @RequestAttribute("userId") String userId,
-            @RequestAttribute(value = "userNsRoles", required = false) Map<Long, NamespaceRole> userNsRoles) {
-        return ok("response.success.read", governanceWorkflowAppService.listReviewScopes(userId, userNsRoles));
-    }
-
     @PostMapping
     public ApiResponse<ReviewTaskResponse> submitReview(@RequestBody ReviewTaskRequest request,
                                                         @RequestAttribute("userId") String userId,
@@ -119,11 +111,8 @@ public class ReviewController extends BaseApiController {
     }
 
     @GetMapping
-    public ApiResponse<PageResponse<ReviewTaskResponse>> listReviews(@RequestParam(defaultValue = "PENDING") String status,
+    public ApiResponse<PageResponse<ReviewTaskResponse>> listReviews(@RequestParam String status,
                                                                      @RequestParam(required = false) Long namespaceId,
-                                                                     @RequestParam(defaultValue = "") String q,
-                                                                     @RequestParam(required = false) String reviewKind,
-                                                                     @RequestParam(required = false) String originType,
                                                                      @RequestParam(defaultValue = "0") int page,
                                                                      @RequestParam(defaultValue = "20") int size,
                                                                      @RequestParam(defaultValue = "DESC") String sortDirection,
@@ -131,7 +120,7 @@ public class ReviewController extends BaseApiController {
                                                                      @RequestAttribute(value = "userNsRoles", required = false) Map<Long, NamespaceRole> userNsRoles) {
         return ok(
                 "response.success.read",
-                governanceWorkflowAppService.listReviewQueue(status, namespaceId, q, reviewKind, originType, page, size, sortDirection, userId, userNsRoles)
+                governanceWorkflowAppService.listReviews(status, namespaceId, page, size, sortDirection, userId, userNsRoles)
         );
     }
 

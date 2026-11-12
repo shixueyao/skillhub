@@ -1,4 +1,3 @@
-import { OperationSurfaceStyles } from './operation-styles.js';
 import { useCallback, useRef, useState } from 'react';
 import type { ConversationManagementResult, InstalledSkillList } from '../host/types.js';
 import { ManagementConfirmation, refreshManagementLocation, verifyManagementReference, type ManagementViewServices } from './management-tool-view.js';
@@ -46,12 +45,12 @@ export function ToggleControl({ services, revision, item, onRefreshed, eligible 
   return <div ref={setContainer} className="astron-sh-toggle-control" data-installation-state={item.installationState}
     onBlur={event => { if (!event.currentTarget.contains(event.relatedTarget as Node | null)) setMore(false); }}
     onKeyDown={event => { if (event.key === 'Escape' && more) { event.preventDefault(); setMore(false); trigger.current?.focus(); } }}>
-    <OperationSurfaceStyles />{receipt || error ? <Button size="sm" variant="ghost" onClick={() => setOpen(true)}>查看启停结果</Button>
+    {receipt || error ? <Button size="sm" variant="ghost" onClick={() => setOpen(true)}>查看启停结果</Button>
       : disabled ? <Button size="sm" variant={presentation === 'button' ? 'default' : 'outline'} disabled={pending || !eligible} onClick={() => void begin()}>启用</Button>
         : presentation === 'button' ? <Button size="sm" variant="ghost" disabled={pending || !eligible} onClick={() => void begin()}>停用</Button>
-          : <><Button ref={trigger} size="sm" variant="ghost" aria-label="更多操作" aria-expanded={more} disabled={pending || !eligible} onClick={() => setMore(value => !value)}>管理</Button>
+          : <><Button ref={trigger} size="sm" variant="ghost" aria-label="更多操作" aria-expanded={more} disabled={pending || !eligible} onClick={() => setMore(value => !value)}>···</Button>
           {more && <Button size="sm" variant="ghost" disabled={pending || !eligible} onClick={() => void begin()}>停用</Button>}</>}
-    {container && <Dialog open={open} onOpenChange={value => { if (!pending) setOpen(value); }}><DialogContent className="astron-sh-dialog astron-sh-operation-confirm" container={container}>
+    {container && <Dialog open={open} onOpenChange={value => { if (!pending) setOpen(value); }}><DialogContent container={container} className="astron-sh-dialog">
       <DialogTitle>{receipt?.action === 'enable' || (!receipt && disabled) ? '启用技能' : '停用技能'}</DialogTitle>
       <DialogDescription className="astron-sh-sr-only">核对安装位置后确认操作</DialogDescription>
       {pending && <p role="status">正在核验安装状态…</p>}

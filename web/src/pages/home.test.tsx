@@ -13,14 +13,8 @@ vi.mock('react-i18next', async () => {
     ...actual,
     useTranslation: () => ({
       t: (key: string) => key,
-      i18n: { resolvedLanguage: 'en' },
     }),
   }
-})
-
-vi.mock('@/shared/hooks/use-site-presentation', async (original) => {
-  const actual = await original<typeof import('@/shared/hooks/use-site-presentation')>()
-  return { ...actual, useSitePresentation: () => ({ settings: actual.defaultSitePresentation() }) }
 })
 
 vi.mock('@/features/search/search-bar', () => ({

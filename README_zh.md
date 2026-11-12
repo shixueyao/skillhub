@@ -63,6 +63,13 @@ Skill，欢迎分享给 SkillHub 社区，与大家一起丰富开放、实用�
 - **账户合并** — 将多个 OAuth 身份和 API 令牌整合到单个用户账户下。
 - **API 令牌管理** — 为 CLI 和程序化访问生成作用域令牌，采用基于前缀的安全哈希。
 - **CLI 优先** — 原生 REST API，加上对现有 ClawHub 风格注册中心客户端的兼容层。原生 CLI API 是主要支持路径，协议兼容性持续扩展中。
+- **DSH 插件托管** — 像技能一样发布、版本化和分发 DeepSeek Harness 插件 tarball，
+  复用命名空间、归属和审计模型。见 [DSH 插件托管](./docs/dsh-plugin-hosting.md)。
+- **内部 AI 门户** — 可自定义公告与 Hero、精选 AI 应用入口的首页，独立的 AI 应用页面，所有功能入口集中在顶部标签。
+- **MCP 服务注册表** — 登录用户可发布远程 HTTP/SSE、stdio 命令/包或粘贴客户端 JSON，详情页提供可直接复制的 `mcpServers` 配置。
+  见 [门户首页](./docs/portal-home.md)。
+- **AI 工具下载** — 管理员上传工具文件并填写分类、简介与使用说明，成员可浏览和下载。
+  见 [AI 工具下载](./docs/ai-tools.md)。
 - **可插拔存储** — 开发环境使用本地文件系统，生产环境使用 S3 / MinIO。通过配置切换。
 - **国际化** — 使用 i18next 支持英语、简体中文、俄语和韩语。
 
@@ -262,17 +269,9 @@ curl -fsSL https://imageless.oss-cn-beijing.aliyuncs.com/runtime.sh | sh -s -- u
 curl -fsSL https://raw.githubusercontent.com/iflytek/skillhub/v0.2.25/scripts/runtime.sh | sh -s -- up --ref v0.2.25 --version v0.2.25 --home /opt/skillhub --public-url https://skillhub.your-company.com
 ```
 
-此例需要能访问 GitHub raw。新版安装器在 `--aliyun` 下只从 OSS 根目录获取三个核心文件：
-`runtime.sh`、`compose.release.yml`、`.env.release.example`；五个可选统计／Collector 配置文件
-改为按需通过 `gh-proxy.org` 获取，与普通 GitHub 来源一样使用 `--ref` 或 `SKILLHUB_REF`，默认 `main`。
-修改这些模板无需同步安装器中的提交或哈希清单，也无需逐个上传 OSS。每次使用都重新下载所选 ref，
-不会因本地已有模板而跳过更新；`main` 可变，代理可能有缓存，不承诺实时取得最新提交。
-生产环境应通过 `--ref` 指定已审核 tag 或提交，并配套设置镜像 `--version`；仅指定 `--version`
-不会改变文件来源。OSS 核心文件仍不按 `--ref` 选择版本子目录，由发布方保证与所选发行兼容。
-下载失败、空响应或明显格式错误时停止可选操作，保留原目标文件，不静默回退其他 ref。
-基础格式检查不等于完整 YAML 校验或来源真实性校验；使用此模式须信任第三方代理，其可用性也不保证。
-显式指定的 `SKILLHUB_RAW_BASE` 保持原有来源行为，不走上述内置代理路径；
-不能把 OSS 核心文件或自定义来源称为已通过 `--ref` 固定。
+此例需要能访问 GitHub raw。`--aliyun` 会改用 OSS 根目录下载部署文件，
+此时 `--ref` 不会选择版本子目录；自定义 `SKILLHUB_RAW_BASE` 也优先于按 Git ref 生成的地址，
+不能把这两种情况称为已通过 `--ref` 固定部署文件。
 脚本保留已有 `.env.release`，请另行记录其中配置及显式镜像覆盖值。
 固定应用镜像标签不等于冻结全部依赖镜像，也不能代替数据库备份。
 
@@ -363,7 +362,7 @@ SkillHub 采用清晰的分层架构：
 ### 后端
 - **语言**：Java 21
 - **框架**：Spring Boot 3.2.3
-- **数据库**：PostgreSQL（默认 16，已验证 17）+ Flyway 迁移
+- **数据库**：PostgreSQL 16 + Flyway 迁移
 - **缓存**：Redis 7
 - **存储**：S3/MinIO
 - **搜索**：PostgreSQL 全文搜索

@@ -11,15 +11,15 @@ Read [README](./README.md) for setup and [CONTRIBUTING](./CONTRIBUTING.md) for c
 4. Read actual source, tests, schemas and scripts before treating documentation as implemented behavior.
    Report conflicts and known deviations; do not silently redefine business policy.
 
-| Change | Entry |
-|---|---|
-| Frontend UI, state, requests, types | [Frontend](./.trellis/spec/frontend/index.md) |
-| Backend modules, APIs, persistence, scanning | [Backend](./.trellis/spec/backend/index.md) |
-| Tests, CI, acceptance | [Testing](./.trellis/spec/testing/index.md) |
-| Configuration, containers, release, migrations | [Deployment](./.trellis/spec/deployment/index.md) |
-| CLI | [CLI](./.trellis/spec/cli/index.md) |
-| Development, PR, completion | [Workflow](./.trellis/spec/workflow/index.md) |
-| Reuse or cross-layer decisions | [Thinking guides](./.trellis/spec/guides/index.md) |
+| Change                                         | Entry                                              |
+| ---------------------------------------------- | -------------------------------------------------- |
+| Frontend UI, state, requests, types            | [Frontend](./.trellis/spec/frontend/index.md)      |
+| Backend modules, APIs, persistence, scanning   | [Backend](./.trellis/spec/backend/index.md)        |
+| Tests, CI, acceptance                          | [Testing](./.trellis/spec/testing/index.md)        |
+| Configuration, containers, release, migrations | [Deployment](./.trellis/spec/deployment/index.md)  |
+| CLI                                            | [CLI](./.trellis/spec/cli/index.md)                |
+| Development, PR, completion                    | [Workflow](./.trellis/spec/workflow/index.md)      |
+| Reuse or cross-layer decisions                 | [Thinking guides](./.trellis/spec/guides/index.md) |
 
 ## Core project rules
 

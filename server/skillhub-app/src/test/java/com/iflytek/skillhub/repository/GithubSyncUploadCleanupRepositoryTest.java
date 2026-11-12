@@ -1,6 +1,5 @@
 package com.iflytek.skillhub.repository;
 
-import com.iflytek.skillhub.support.PostgresTestImage;
 import com.iflytek.skillhub.githubsync.GithubSyncUploadRepository;
 import com.iflytek.skillhub.infra.jpa.JdbcGithubSyncUploadRepository;
 import org.junit.jupiter.api.Test;
@@ -28,7 +27,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @Testcontainers
 class GithubSyncUploadCleanupRepositoryTest {
     @Container
-    private static final PostgreSQLContainer<?> POSTGRES = new PostgreSQLContainer<>(PostgresTestImage.name());
+    private static final PostgreSQLContainer<?> POSTGRES = new PostgreSQLContainer<>("postgres:16-alpine");
 
     @DynamicPropertySource
     static void postgres(DynamicPropertyRegistry registry) {

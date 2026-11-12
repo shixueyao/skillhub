@@ -1,6 +1,5 @@
 package com.iflytek.skillhub.metrics;
 
-import com.iflytek.skillhub.support.PostgresTestImage;
 import com.iflytek.skillhub.config.SkillPublishProperties;
 import com.iflytek.skillhub.storage.ObjectStorageService;
 import com.iflytek.skillhub.storage.StorageProperties;
@@ -36,7 +35,7 @@ import static org.mockito.Mockito.when;
 class GithubSyncStagingCapacityMetricsTest {
     @Container
     private static final PostgreSQLContainer<?> POSTGRES =
-            new PostgreSQLContainer<>(PostgresTestImage.name());
+            new PostgreSQLContainer<>("postgres:16-alpine");
 
     @DynamicPropertySource
     static void postgres(DynamicPropertyRegistry registry) {

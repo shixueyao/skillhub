@@ -1,6 +1,5 @@
 package com.iflytek.skillhub.db;
 
-import com.iflytek.skillhub.support.PostgresTestImage;
 import com.iflytek.skillhub.infra.jpa.JdbcGithubDiscoveryOutcomeRepository;
 import java.time.Instant;
 import org.flywaydb.core.Flyway;
@@ -15,7 +14,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @Testcontainers
 class GithubDiscoveryOutcomeUpgradeTest {
-    @Container static final PostgreSQLContainer<?> POSTGRES = new PostgreSQLContainer<>(PostgresTestImage.name());
+    @Container static final PostgreSQLContainer<?> POSTGRES = new PostgreSQLContainer<>("postgres:16-alpine");
 
     @Test void upgradingV114PreservesUnknownValidationForBothLegacyCandidatesAndSourceOnlyRepositories() {
         var source = new DriverManagerDataSource(POSTGRES.getJdbcUrl(), POSTGRES.getUsername(), POSTGRES.getPassword());

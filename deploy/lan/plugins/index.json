@@ -1,0 +1,69 @@
+{
+  "schemaVersion": 1,
+  "name": "SkillHub LAN DSH Plugin Repository",
+  "description": "内网 DSH 插件分发仓库：版本化发布、校验与回滚",
+  "updatedAt": "2026-11-06T02:35:31Z",
+  "skillhubBaseUrl": "http://192.168.100.135",
+  "recommended": "@astron-team/skillhub-dsh",
+  "plugins": {
+    "@astron-team/skillhub-dsh": {
+      "name": "@astron-team/skillhub-dsh",
+      "description": "Native SkillHub browsing and local skill management for DeepSeek Harness",
+      "license": "Apache-2.0",
+      "homepage": "https://github.com/iflytek/skillhub/tree/main/plugins/dsh#readme",
+      "latest": "0.6.2",
+      "versions": [
+        {
+          "version": "0.6.2",
+          "file": "versions/astron-team-skillhub-dsh-0.6.2.tgz",
+          "sha256": "08a134a68deaf2b9be96d65f5e828c5c361dc1abc5f35c4f9be893ddd65996f1",
+          "size": 725799,
+          "publishedAt": "2026-11-05T11:13:01Z",
+          "notes": "官方 npm 发行版 0.6.2（离线内网分发）",
+          "yanked": false,
+          "package": {
+            "name": "@astron-team/skillhub-dsh",
+            "version": "0.6.2",
+            "license": "Apache-2.0",
+            "engines": {
+              "node": ">=24.2.0 <25"
+            },
+            "peerDependencies": {
+              "@deepseek-ai/cordis": "4.0.4 || 4.0.5",
+              "@deepseek-ai/dsh-fs": "0.2.0-rc.2 || 0.2.1-rc.2 || 0.2.1-rc.5",
+              "@deepseek-ai/dsh-home-paths": "0.2.0-rc.2 || 0.2.1-rc.2 || 0.2.1-rc.5",
+              "@deepseek-ai/dsh-sandbox": "0.2.0-rc.2 || 0.2.1-rc.2 || 0.2.1-rc.5",
+              "@deepseek-ai/dsh-sandbox-policy": "0.2.0-rc.2 || 0.2.1-rc.2 || 0.2.1-rc.5",
+              "@deepseek-ai/dsh-session": "0.2.0-rc.2 || 0.2.1-rc.2 || 0.2.1-rc.5",
+              "@deepseek-ai/dsh-session-query": "0.2.0-rc.2 || 0.2.1-rc.2 || 0.2.1-rc.5",
+              "@deepseek-ai/dsh-skill-filesystem": "0.2.0-rc.2 || 0.2.1-rc.2 || 0.2.1-rc.5",
+              "@deepseek-ai/dsh-tools": "0.2.0-rc.2 || 0.2.1-rc.2 || 0.2.1-rc.5",
+              "@deepseek-ai/dsh-typert-protocol": "0.2.0-rc.2 || 0.2.1-rc.2 || 0.2.1-rc.5",
+              "@deepseek-ai/dsh-user-questions": "0.2.0-rc.2 || 0.2.1-rc.2 || 0.2.1-rc.5",
+              "@deepseek-ai/dsh-atomic-write": "0.2.0-rc.2 || 0.2.1-rc.2 || 0.2.1-rc.5"
+            },
+            "dsh": [
+              "bundle",
+              "client"
+            ]
+          },
+          "compatNote": "DSH 0.2.0-rc.2 / 0.2.1-rc.2 / 0.2.1-rc.5；Host Node >=24.2.0 <25"
+        }
+      ],
+      "category": "官方插件",
+      "tags": [
+        "官方",
+        "SkillHub",
+        "DSH",
+        "离线分发"
+      ]
+    }
+  },
+  "categories": [
+    "官方插件",
+    "技能管理",
+    "开发工具",
+    "集成扩展",
+    "其他"
+  ]
+}

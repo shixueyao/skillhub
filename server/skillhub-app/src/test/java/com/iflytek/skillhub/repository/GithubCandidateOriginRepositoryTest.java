@@ -1,6 +1,5 @@
 package com.iflytek.skillhub.repository;
 
-import com.iflytek.skillhub.support.PostgresTestImage;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.iflytek.skillhub.githubsync.GithubDiscoveryBatch;
 import com.iflytek.skillhub.githubsync.GithubDiscoveryBatchResult;
@@ -41,7 +40,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @Testcontainers
 class GithubCandidateOriginRepositoryTest {
     @Container
-    private static final PostgreSQLContainer<?> POSTGRES = new PostgreSQLContainer<>(PostgresTestImage.name());
+    private static final PostgreSQLContainer<?> POSTGRES = new PostgreSQLContainer<>("postgres:16-alpine");
 
     @DynamicPropertySource
     static void postgres(DynamicPropertyRegistry registry) {

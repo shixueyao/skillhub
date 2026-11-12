@@ -54,7 +54,6 @@ vi.mock('@/shared/ui/card', () => ({
 
 vi.mock('@/shared/hooks/use-skill-queries', () => ({
   useSkillDetail: () => ({ data: null, isLoading: false, isError: false }),
-  useSkillVersionDetail: () => ({ data: null, isLoading: false, isError: false, refetch: vi.fn() }),
   usePublishSkill: () => ({ mutateAsync: vi.fn(), isPending: false }),
 }))
 

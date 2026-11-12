@@ -1,0 +1,83 @@
+{
+  "version": 2,
+  "updatedAt": "2026-11-06T10:57:09.066Z",
+  "enabled": true,
+  "homeManagedByApp": true,
+  "notice": {
+    "enabled": true,
+    "level": "info",
+    "text": "欢迎使用团队 AI 工作台。技能、技能套装与 DSH 插件都在这里统一入口。"
+  },
+  "hero": {
+    "title": "内部 AI 工作台",
+    "description": "团队 AI 应用、技能与 DSH 插件的统一入口。",
+    "primaryButtonText": "浏览 AI 应用",
+    "primaryButtonUrl": "/apps"
+  },
+  "sections": [
+    {
+      "id": "apps",
+      "title": "AI 应用",
+      "description": "团队常用的 AI 能力入口。",
+      "layout": "grid",
+      "items": [
+        {
+          "title": "技能市场",
+          "body": "浏览、搜索并安装团队已发布的技能。",
+          "linkText": "打开技能市场 →",
+          "linkUrl": "/search",
+          "icon": "🧩",
+          "category": "平台",
+          "tags": [
+            "技能"
+          ],
+          "showOnHome": true
+        },
+        {
+          "title": "技能套装",
+          "body": "按场景组合的版本化技能集合。",
+          "linkText": "浏览套装 →",
+          "linkUrl": "/suites",
+          "icon": "📦",
+          "category": "平台",
+          "tags": [
+            "套装"
+          ],
+          "showOnHome": true
+        },
+        {
+          "title": "DSH 插件",
+          "body": "DeepSeek Harness 插件与安装命令。",
+          "linkText": "打开插件页 →",
+          "linkUrl": "/plugins",
+          "icon": "🔌",
+          "category": "平台",
+          "tags": [
+            "插件"
+          ],
+          "showOnHome": true
+        },
+        {
+          "title": "发布内容",
+          "body": "发布技能或 DSH 插件，让团队复用你的成果。",
+          "linkText": "前往发布 →",
+          "linkUrl": "/dashboard/publish",
+          "icon": "⬆️",
+          "category": "平台",
+          "tags": [
+            "发布"
+          ],
+          "showOnHome": true
+        }
+      ]
+    }
+  ],
+  "footerNote": "",
+  "nav": {
+    "dshPlugins": "DSH 插件",
+    "dshPluginsHref": "/plugins",
+    "publishPluginHref": "/dashboard/plugins/publish",
+    "dshPluginsHide": true,
+    "admin": "首页内容"
+  }
+}

@@ -1,7 +1,5 @@
 package com.iflytek.skillhub.domain.skill.service;
 
-import com.iflytek.skillhub.domain.event.BusinessEventSnapshot;
-
 import com.iflytek.skillhub.domain.skill.SkillOwnerAccessPolicy;
 import com.iflytek.skillhub.domain.event.SkillPublishedEvent;
 import com.iflytek.skillhub.domain.namespace.NamespaceMemberRepository;
@@ -193,8 +191,7 @@ public class SkillReviewSubmitService {
         skillRepository.save(skill);
 
         eventPublisher.publishEvent(new SkillPublishedEvent(
-                skill.getId(), version.getId(), actorUserId,
-                BusinessEventSnapshot.capture(skill, actorUserId, "private_confirm")));
+                skill.getId(), version.getId(), actorUserId));
     }
 
 private void assertCanManageLifecycle(Skill skill, String actorUserId,

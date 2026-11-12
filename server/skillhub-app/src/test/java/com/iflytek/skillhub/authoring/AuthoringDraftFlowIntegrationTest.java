@@ -1,6 +1,5 @@
 package com.iflytek.skillhub.authoring;
 
-import com.iflytek.skillhub.support.PostgresTestImage;
 import com.iflytek.skillhub.TestRedisConfig;
 import com.iflytek.skillhub.domain.authoring.SkillDraft;
 import com.iflytek.skillhub.domain.authoring.service.SkillDraftService;
@@ -74,7 +73,7 @@ class AuthoringDraftFlowIntegrationTest {
 
     @Container
     private static final PostgreSQLContainer<?> POSTGRES =
-            new PostgreSQLContainer<>(PostgresTestImage.name());
+            new PostgreSQLContainer<>("postgres:16-alpine");
 
     @DynamicPropertySource
     static void configurePostgres(DynamicPropertyRegistry registry) {

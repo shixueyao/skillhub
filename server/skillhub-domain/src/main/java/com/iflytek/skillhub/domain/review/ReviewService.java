@@ -1,7 +1,5 @@
 package com.iflytek.skillhub.domain.review;
 
-import com.iflytek.skillhub.domain.event.BusinessEventSnapshot;
-
 import com.iflytek.skillhub.domain.skill.SkillOwnerAccessPolicy;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -291,11 +289,10 @@ public class ReviewService {
 
         if (avatarParticipant != null) { avatarParticipant.decide(task, true, reviewerId, comment); }
         eventPublisher.publishEvent(new SkillPublishedEvent(
-                skill.getId(), skillVersion.getId(), reviewerId,
-                BusinessEventSnapshot.capture(skill, reviewerId, "review")));
+                skill.getId(), skillVersion.getId(), reviewerId));
         eventPublisher.publishEvent(new ReviewApprovedEvent(
                 task.getId(), skill.getId(), skillVersion.getId(),
-                reviewerId, task.getSubmittedBy(), BusinessEventSnapshot.capture(skill, reviewerId, "review")));
+                reviewerId, task.getSubmittedBy()));
         governanceNotificationService.notifyUser(
                 task.getSubmittedBy(),
                 "REVIEW",
@@ -361,7 +358,7 @@ public class ReviewService {
         if (avatarParticipant != null) { avatarParticipant.decide(task, false, reviewerId, comment); }
         eventPublisher.publishEvent(new ReviewRejectedEvent(
                 task.getId(), skill.getId(), skillVersion.getId(),
-                reviewerId, task.getSubmittedBy(), comment, BusinessEventSnapshot.capture(skill, reviewerId, "review")));
+                reviewerId, task.getSubmittedBy(), comment));
         governanceNotificationService.notifyUser(
                 task.getSubmittedBy(),
                 "REVIEW",
@@ -470,7 +467,7 @@ public class ReviewService {
         try {
             SkillMetadata metadata = objectMapper.readValue(metadataJson, SkillMetadata.class);
             skill.setDisplayName(metadata.displayName());
-            skill.setSummary(metadata.shortDescription());
+            skill.setSummary(metadata.description());
         } catch (Exception e) {
             throw new IllegalStateException("Failed to deserialize skill metadata", e);
         }

@@ -8,7 +8,6 @@ export type NotificationDisplay = {
 
 type NotificationBody = {
   skillName?: string
-  suiteName?: string
   version?: string
 }
 
@@ -25,7 +24,6 @@ function parseBody(bodyJson?: string): NotificationBody {
 }
 
 const localizedEvents = new Set([
-  'SUITE_REVIEW_SUBMITTED', 'SUITE_REVIEW_APPROVED', 'SUITE_REVIEW_REJECTED',
   'REVIEW_SUBMITTED', 'REVIEW_APPROVED', 'REVIEW_REJECTED',
   'PROMOTION_SUBMITTED', 'PROMOTION_APPROVED', 'PROMOTION_REJECTED',
   'REPORT_SUBMITTED', 'REPORT_RESOLVED', 'SKILL_PUBLISHED',
@@ -37,8 +35,6 @@ export function resolveNotificationDisplay(item: NotificationItem, language: str
   const t = i18n.getFixedT(language)
   const body = parseBody(item.bodyJson)
   const skillName = body.skillName ?? ''
-  const suiteName = body.suiteName ?? ''
-  const resourceName = item.eventType.startsWith('SUITE_REVIEW_') ? suiteName : skillName
   const version = body.version ?? ''
   const versionSuffix = version ? (zh ? `（${version}）` : ` (${version})`) : ''
 
@@ -48,8 +44,8 @@ export function resolveNotificationDisplay(item: NotificationItem, language: str
 
   return {
     title: t(`notificationEvents.${item.eventType}.title`),
-    description: resourceName
-      ? t(`notificationEvents.${item.eventType}.description`, { skillName, suiteName, versionSuffix })
+    description: skillName
+      ? t(`notificationEvents.${item.eventType}.description`, { skillName, versionSuffix })
       : '',
   }
 }

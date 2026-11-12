@@ -75,7 +75,7 @@ public class LocalDevDataInitializer implements ApplicationRunner {
     }
 
     private UserAccount ensureUser(String userId, String displayName, String email) {
-        return userAccountRepository.findLockedFreshById(userId)
+        return userAccountRepository.findById(userId)
                 .map(existing -> {
                     existing.setDisplayName(displayName);
                     existing.setEmail(email);

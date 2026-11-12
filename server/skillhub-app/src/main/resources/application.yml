@@ -119,8 +119,10 @@ spring:
             user-name-attribute: unionId
   servlet:
     multipart:
-      max-file-size: 100MB
-      max-request-size: 100MB
+      # AI tool packages may legitimately exceed the old 100 MB ceiling.
+      # -1 removes the multipart cap; nginx is configured with the same policy.
+      max-file-size: -1
+      max-request-size: -1
   mail:
     host: ${SPRING_MAIL_HOST:localhost}
     port: ${SPRING_MAIL_PORT:25}
@@ -130,28 +132,10 @@ spring:
       mail:
         smtp:
           auth: ${SPRING_MAIL_SMTP_AUTH:false}
-          connectiontimeout: ${SPRING_MAIL_SMTP_CONNECTION_TIMEOUT_MS:5000}
-          timeout: ${SPRING_MAIL_SMTP_READ_TIMEOUT_MS:10000}
-          writetimeout: ${SPRING_MAIL_SMTP_WRITE_TIMEOUT_MS:10000}
           starttls:
             enable: ${SPRING_MAIL_SMTP_STARTTLS_ENABLE:false}
 
 skillhub:
-  notification:
-    email:
-      # Seed only when notification.email is absent; subsequent changes use the admin UI.
-      enabled: ${SKILLHUB_NOTIFICATION_EMAIL_ENABLED:false}
-      digest-window-minutes: ${SKILLHUB_NOTIFICATION_EMAIL_DIGEST_WINDOW_MINUTES:60}
-      public-base-url: ${SKILLHUB_NOTIFICATION_EMAIL_PUBLIC_BASE_URL:${SKILLHUB_PUBLIC_BASE_URL:}}
-      from-address: ${SKILLHUB_NOTIFICATION_EMAIL_FROM_ADDRESS:${SPRING_MAIL_USERNAME:}}
-      from-name: ${SKILLHUB_NOTIFICATION_EMAIL_FROM_NAME:SkillHub}
-      delivery:
-        poll-delay-ms: ${SKILLHUB_NOTIFICATION_EMAIL_DELIVERY_POLL_DELAY_MS:10000}
-        lease-seconds: ${SKILLHUB_NOTIFICATION_EMAIL_DELIVERY_LEASE_SECONDS:120}
-        retry-window-hours: ${SKILLHUB_NOTIFICATION_EMAIL_DELIVERY_RETRY_WINDOW_HOURS:24}
-        batch-size: ${SKILLHUB_NOTIFICATION_EMAIL_DELIVERY_BATCH_SIZE:20}
-        sent-retention-days: ${SKILLHUB_NOTIFICATION_EMAIL_DELIVERY_SENT_RETENTION_DAYS:30}
-        failed-retention-days: ${SKILLHUB_NOTIFICATION_EMAIL_DELIVERY_FAILED_RETENTION_DAYS:90}
   authoring:
     # Root directory for per-run isolated validation workspaces
     workspace-root: ${SKILLHUB_AUTHORING_WORKSPACE_ROOT:${java.io.tmpdir}/skillhub-authoring}
@@ -179,6 +163,13 @@ skillhub:
     lease-duration: ${SKILLHUB_GITHUB_SYNC_LEASE_DURATION:PT5M}
     repository-check-interval: ${SKILLHUB_GITHUB_SYNC_REPOSITORY_CHECK_INTERVAL:PT24H}
 
+  dsh-plugin:
+    # Hosted DSH plugin tarball limits. Keep max-package-size aligned with the
+    # reverse proxy's client_max_body_size.
+    max-package-size: ${SKILLHUB_DSH_PLUGIN_MAX_PACKAGE_SIZE:52428800} # 50MB
+    max-uncompressed-size: ${SKILLHUB_DSH_PLUGIN_MAX_UNCOMPRESSED_SIZE:268435456} # 256MB
+    max-manifest-size: ${SKILLHUB_DSH_PLUGIN_MAX_MANIFEST_SIZE:2097152} # 2MB
+    max-entries: ${SKILLHUB_DSH_PLUGIN_MAX_ENTRIES:10000}
   suite:
     # Fail closed for deployment modes whose upgrade topology is unknown. Single-instance
     # distributions explicitly enable this after ruling out mixed application versions.
@@ -188,22 +179,6 @@ skillhub:
       confirmation-enabled: ${SKILLHUB_SUITE_BUNDLE_CONFIRMATION_ENABLED:false}
   observability:
     tracing-mode: ${SKILLHUB_TRACING_MODE:none}
-    business-logs:
-      enabled: ${SKILLHUB_BUSINESS_LOGS_ENABLED:false}
-      # Logs-specific URL is used as-is; include /v1/logs (not /v1/traces).
-      endpoint: ${SKILLHUB_BUSINESS_LOGS_ENDPOINT:}
-      headers: ${SKILLHUB_BUSINESS_LOGS_HEADERS:}
-      timeout: ${SKILLHUB_BUSINESS_LOGS_TIMEOUT:3s}
-      compression: ${SKILLHUB_BUSINESS_LOGS_COMPRESSION:gzip}
-      max-queue-size: ${SKILLHUB_BUSINESS_LOGS_MAX_QUEUE_SIZE:2048}
-      max-export-batch-size: ${SKILLHUB_BUSINESS_LOGS_MAX_EXPORT_BATCH_SIZE:256}
-      schedule-delay: ${SKILLHUB_BUSINESS_LOGS_SCHEDULE_DELAY:1s}
-      shutdown-timeout: ${SKILLHUB_BUSINESS_LOGS_SHUTDOWN_TIMEOUT:5s}
-      retry-max-attempts: ${SKILLHUB_BUSINESS_LOGS_RETRY_MAX_ATTEMPTS:3}
-      retry-initial-backoff: ${SKILLHUB_BUSINESS_LOGS_RETRY_INITIAL_BACKOFF:200ms}
-      retry-max-backoff: ${SKILLHUB_BUSINESS_LOGS_RETRY_MAX_BACKOFF:1s}
-      event-allowlist: ${SKILLHUB_BUSINESS_LOGS_EVENT_ALLOWLIST:skill.publication.effective,skill.download.prepared,skill.review.approved,skill.review.rejected,skill.promotion.approved,skill.promotion.rejected,skill.status.changed,skill.visibility.changed,skill.version.yanked}
-      namespace-allowlist: ${SKILLHUB_BUSINESS_LOGS_NAMESPACE_ALLOWLIST:}
     log-format: ${SKILLHUB_LOG_FORMAT:text}
     log-async-queue-size: ${SKILLHUB_LOG_ASYNC_QUEUE_SIZE:1024}
     service-version: ${SKILLHUB_SERVICE_VERSION:unknown}
@@ -375,7 +350,7 @@ management:
   endpoints:
     web:
       exposure:
-        include: ${SKILLHUB_ACTUATOR_EXPOSURE_INCLUDE:health,info}
+        include: health,info
   endpoint:
     health:
       show-details: when-authorized

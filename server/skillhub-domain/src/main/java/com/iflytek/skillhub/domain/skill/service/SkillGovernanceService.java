@@ -5,7 +5,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.iflytek.skillhub.domain.audit.AuditDetail;
 import com.iflytek.skillhub.domain.audit.AuditLogService;
 import com.iflytek.skillhub.domain.event.SkillStatusChangedEvent;
-import com.iflytek.skillhub.domain.event.BusinessEventSnapshot;
 import com.iflytek.skillhub.domain.namespace.NamespaceRole;
 import com.iflytek.skillhub.domain.review.ReviewTaskRepository;
 import com.iflytek.skillhub.domain.security.SecurityScanService;
@@ -140,8 +139,7 @@ public class SkillGovernanceService {
         skill.setUpdatedBy(actorUserId);
         Skill saved = skillRepository.save(skill);
         auditLogService.record(actorUserId, "ARCHIVE_SKILL", "SKILL", skill.getId(), null, clientIp, userAgent, jsonReason(reason));
-        eventPublisher.publishEvent(new SkillStatusChangedEvent(skill.getId(), previousStatus, SkillStatus.ARCHIVED,
-                BusinessEventSnapshot.capture(skill, actorUserId, "governance")));
+        eventPublisher.publishEvent(new SkillStatusChangedEvent(skill.getId(), previousStatus, SkillStatus.ARCHIVED));
         return saved;
     }
 
@@ -182,8 +180,7 @@ public class SkillGovernanceService {
         skill.setUpdatedBy(actorUserId);
         Skill saved = skillRepository.save(skill);
         auditLogService.record(actorUserId, "UNARCHIVE_SKILL", "SKILL", skillId, null, clientIp, userAgent, null);
-        eventPublisher.publishEvent(new SkillStatusChangedEvent(skillId, previousStatus, SkillStatus.ACTIVE,
-                BusinessEventSnapshot.capture(skill, actorUserId, "governance")));
+        eventPublisher.publishEvent(new SkillStatusChangedEvent(skillId, previousStatus, SkillStatus.ACTIVE));
         return saved;
     }
 
@@ -356,8 +353,7 @@ public class SkillGovernanceService {
         version.setYankReason(reason);
         version.setDownloadReady(false);
         SkillVersion saved = skillVersionRepository.save(version);
-        Optional<Skill> eventSkill = skillRepository.findById(version.getSkillId());
-        eventSkill.ifPresent(skill -> {
+        skillRepository.findById(version.getSkillId()).ifPresent(skill -> {
             if (versionId.equals(skill.getLatestVersionId())) {
                 Optional<SkillVersion> fallback = findLatestPublishedVersion(skill.getId());
                 skill.setLatestVersionId(fallback.map(SkillVersion::getId).orElse(null));
@@ -368,8 +364,7 @@ public class SkillGovernanceService {
         });
         auditLogService.record(actorUserId, "YANK_SKILL_VERSION", "SKILL_VERSION", versionId, null, clientIp, userAgent, jsonReason(reason));
         eventPublisher.publishEvent(new com.iflytek.skillhub.domain.event.SkillVersionYankedEvent(
-                version.getSkillId(), versionId, actorUserId, true,
-                eventSkill.map(skill -> BusinessEventSnapshot.capture(skill, actorUserId, "governance")).orElse(null)));
+                version.getSkillId(), versionId, actorUserId, true));
         return saved;
     }
 
@@ -393,7 +388,7 @@ public class SkillGovernanceService {
         try {
             SkillMetadata metadata = objectMapper.readValue(metadataJson, SkillMetadata.class);
             skill.setDisplayName(metadata.displayName());
-            skill.setSummary(metadata.shortDescription());
+            skill.setSummary(metadata.description());
         } catch (Exception e) {
             throw new IllegalStateException("Failed to deserialize skill metadata", e);
         }

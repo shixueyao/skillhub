@@ -1,9 +1,10 @@
 import { startTransition, useEffect, useRef, useState } from 'react'
 import { useNavigate, useSearch } from '@tanstack/react-router'
 import { useTranslation } from 'react-i18next'
-import { Loader2 } from 'lucide-react'
+import { Loader2, Search } from 'lucide-react'
 import type { SkillSummary } from '@/api/types'
 import { useAuth } from '@/features/auth/use-auth'
+import { usePageHeader } from '@/features/pages/page-content'
 import { SearchBar } from '@/features/search/search-bar'
 import { SkillCard } from '@/features/skill/skill-card'
 import { SkeletonList } from '@/shared/components/skeleton-loader'
@@ -202,8 +203,19 @@ export function SearchPage() {
     ? filteredStarredSkills.length
     : (data?.total ?? 0)
 
+  const header = usePageHeader('skills', t('nav.marketplace'), t('portal.skillsDescription'))
+
   return (
     <div className={APP_SHELL_PAGE_CLASS_NAME}>
+      <header>
+        <div className="mb-2 inline-flex items-center gap-2 text-sm font-medium text-primary">
+          <Search className="h-4 w-4" />
+          {t('nav.marketplace')}
+        </div>
+        <h1 className="text-4xl font-bold font-heading">{header.title}</h1>
+        <p className="mt-2 max-w-2xl text-muted-foreground">{header.description}</p>
+      </header>
+
       {/* Search Bar */}
       <div className="max-w-3xl mx-auto">
         <SearchBar analyticsId="search.query.submit"

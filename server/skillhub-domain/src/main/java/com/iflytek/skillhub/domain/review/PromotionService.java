@@ -1,7 +1,5 @@
 package com.iflytek.skillhub.domain.review;
 
-import com.iflytek.skillhub.domain.event.BusinessEventSnapshot;
-
 import com.iflytek.skillhub.domain.skill.SkillOwnerAccessPolicy;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.iflytek.skillhub.domain.audit.AuditDetail;
@@ -296,11 +294,10 @@ public class PromotionService {
         PromotionRequest savedRequest = promotionRequestRepository.save(approvedRequest);
 
         eventPublisher.publishEvent(new SkillPublishedEvent(
-                targetSkill.getId(), newVersion.getId(), reviewerId,
-                BusinessEventSnapshot.capture(targetSkill, reviewerId, "promotion")));
+                targetSkill.getId(), newVersion.getId(), reviewerId));
         eventPublisher.publishEvent(new PromotionApprovedEvent(
                 approvedRequest.getId(), approvedRequest.getSourceSkillId(),
-                reviewerId, approvedRequest.getSubmittedBy(), BusinessEventSnapshot.capture(sourceSkill, reviewerId, "promotion")));
+                reviewerId, approvedRequest.getSubmittedBy()));
         governanceNotificationService.notifyUser(
                 approvedRequest.getSubmittedBy(),
                 "PROMOTION",
@@ -323,7 +320,7 @@ public class PromotionService {
         try {
             SkillMetadata metadata = objectMapper.readValue(metadataJson, SkillMetadata.class);
             target.setDisplayName(metadata.displayName());
-            target.setSummary(metadata.shortDescription());
+            target.setSummary(metadata.description());
         } catch (Exception e) {
             throw new IllegalStateException("Failed to deserialize skill metadata", e);
         }
@@ -399,12 +396,9 @@ public class PromotionService {
         }
         syncPromotionRequestState(request, ReviewTaskStatus.REJECTED, reviewerId, comment);
         entityManager.detach(request);
-        Skill sourceSkill = request.getSourceSkillId() == null ? null
-                : skillRepository.findById(request.getSourceSkillId()).orElse(null);
         eventPublisher.publishEvent(new PromotionRejectedEvent(
                 request.getId(), request.getSourceSkillId(),
-                reviewerId, request.getSubmittedBy(), comment,
-                sourceSkill == null ? null : BusinessEventSnapshot.capture(sourceSkill, reviewerId, "promotion")));
+                reviewerId, request.getSubmittedBy(), comment));
         governanceNotificationService.notifyUser(
                 request.getSubmittedBy(),
                 "PROMOTION",

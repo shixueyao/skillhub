@@ -1,0 +1,264 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DSH 插件仓库 · SkillHub 内网</title>
+<style>
+  :root {
+    --bg: #f6f7f9;
+    --card: #ffffff;
+    --border: #e3e6eb;
+    --text: #1f2329;
+    --muted: #6b7280;
+    --accent: #2563eb;
+    --accent-soft: #eff4ff;
+    --code-bg: #f3f5f8;
+    --ok: #15803d;
+    --warn: #b45309;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; padding: 32px 20px 64px;
+    background: var(--bg); color: var(--text);
+    font: 14px/1.65 -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC",
+          "Microsoft YaHei", "Hiragino Sans GB", sans-serif;
+  }
+  .wrap { max-width: 940px; margin: 0 auto; }
+  header { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; flex-wrap: wrap; margin-bottom: 24px; }
+  h1 { font-size: 24px; margin: 0 0 6px; letter-spacing: -.3px; }
+  .sub { color: var(--muted); margin: 0; }
+  .badge { display: inline-block; padding: 3px 10px; border-radius: 999px; background: var(--accent-soft); color: var(--accent); font-size: 12px; font-weight: 600; }
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  .card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 22px 24px; margin-bottom: 16px; }
+  .card h2 { font-size: 15px; margin: 0 0 14px; font-weight: 650; }
+  .row { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; margin-bottom: 14px; }
+  label { font-size: 13px; color: var(--muted); }
+  select, input[type=text] {
+    font: inherit; padding: 7px 10px; border: 1px solid var(--border);
+    border-radius: 7px; background: #fff; color: var(--text); min-width: 240px;
+  }
+  button {
+    font: inherit; padding: 7px 14px; border: 1px solid var(--accent);
+    border-radius: 7px; background: var(--accent); color: #fff; cursor: pointer;
+  }
+  button.ghost { background: #fff; color: var(--accent); }
+  button:hover { filter: brightness(1.05); }
+  pre {
+    background: var(--code-bg); border: 1px solid var(--border); border-radius: 8px;
+    padding: 14px 16px; overflow-x: auto; font: 12.5px/1.7 "SFMono-Regular", Consolas,
+    "Liberation Mono", Menlo, monospace; white-space: pre-wrap; word-break: break-all; margin: 0;
+  }
+  .kv { display: grid; grid-template-columns: 92px 1fr; gap: 4px 12px; font-size: 13px; margin-bottom: 16px; }
+  .kv dt { color: var(--muted); }
+  .kv dd { margin: 0; word-break: break-all; }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  th, td { text-align: left; padding: 10px 8px; border-bottom: 1px solid var(--border); vertical-align: top; }
+  th { color: var(--muted); font-weight: 500; font-size: 12px; }
+  tr:last-child td { border-bottom: 0; }
+  .tag { display: inline-block; font-size: 11px; padding: 1px 7px; border-radius: 5px; margin-left: 6px; background: #e8f5ec; color: var(--ok); }
+  .tag.off { background: #fdf1e3; color: var(--warn); }
+  .hash { font: 11.5px/1.5 "SFMono-Regular", Consolas, monospace; color: var(--muted); word-break: break-all; }
+  ol { margin: 0; padding-left: 20px; }
+  ol li { margin-bottom: 9px; }
+  .note { color: var(--muted); font-size: 12.5px; }
+  footer { text-align: center; color: var(--muted); font-size: 12px; margin-top: 28px; }
+  .error { background: #fff3f3; border: 1px solid #f3c9c9; color: #a12626; padding: 16px; border-radius: 8px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div>
+      <h1>DSH 插件仓库 <span class="badge">仅内网</span></h1>
+      <p class="sub">由局域网 SkillHub 部署包提供 · 版本化分发、校验与回滚 · 首页内可按分类搜索，登录后发布与管理插件</p>
+    </div>
+    <a id="skillhub-link" href="/#dsh-plugins">在首页打开 DSH 插件市场 →</a>
+  </header>
+
+  <div id="app"><div class="card"><p class="note">正在读取插件清单…</p></div></div>
+
+  <div class="card" id="steps" hidden>
+    <h2>安装与配置</h2>
+    <ol>
+      <li>在装有 <code>dsh</code> 的机器上，用上方命令安装插件（<code>--ignore-scripts</code> 不执行包内脚本）。</li>
+      <li>启动 DSH Web：<code>dsh web --port 3080</code>（或你现有的 Web Profile）。</li>
+      <li>进入 <strong>插件 → @astron-team/skillhub-dsh → SkillHub 设置 → 技能来源</strong>，把地址填为
+        <code id="registry-url">—</code>，点击「测试连接」后保存。此后技能搜索、下载、安装全部走内网实例，无需公网。</li>
+    </ol>
+    <p class="note">插件 tarball 的 sha256 由 <code>publish-plugin.sh verify</code> 维护；客户端可用
+      <code>sha256sum &lt;file&gt;</code> 或 <code>certutil -hashfile &lt;file&gt; SHA256</code> 核对后再安装。</p>
+  </div>
+
+  <footer>SkillHub LAN 部署包 · 本页无外部依赖，可完全离线访问</footer>
+</div>
+
+<script>
+(function () {
+  "use strict";
+  var app = document.getElementById("app");
+
+  function esc(value) {
+    return String(value == null ? "" : value).replace(/[&<>"']/g, function (c) {
+      return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c];
+    });
+  }
+
+  function detectBase(data) {
+    if (data.skillhubBaseUrl) return data.skillhubBaseUrl.replace(/\/$/, "");
+    var path = new URL(".", location.href).pathname.replace(/dsh-plugins\/?$/, "").replace(/\/$/, "");
+    return location.origin + path;
+  }
+
+  function tarballUrl(base, rel) {
+    return base + "/dsh-plugins/" + String(rel).replace(/^\/+/, "");
+  }
+
+  function copyText(text, button) {
+    var done = function () {
+      var old = button.textContent;
+      button.textContent = "已复制";
+      setTimeout(function () { button.textContent = old; }, 1600);
+    };
+    if (navigator.clipboard && window.isSecureContext) {
+      navigator.clipboard.writeText(text).then(done, function () { fallback(); });
+    } else { fallback(); }
+    function fallback() {
+      var ta = document.createElement("textarea");
+      ta.value = text;
+      ta.style.position = "fixed";
+      ta.style.opacity = "0";
+      document.body.appendChild(ta);
+      ta.select();
+      try { document.execCommand("copy"); done(); }
+      catch (e) { window.prompt("请手动复制：", text); }
+      document.body.removeChild(ta);
+    }
+  }
+
+  fetch("./index.json", { cache: "no-store" })
+    .then(function (r) { if (!r.ok) throw new Error("HTTP " + r.status); return r.json(); })
+    .then(function (data) { render(data); })
+    .catch(function (err) {
+      app.innerHTML = '<div class="error">无法读取 index.json：' + esc(err.message) +
+        '。请确认 SkillHub 容器已启动、插件仓库已挂载到 /dsh-plugins/。</div>';
+    });
+
+  function render(data) {
+    var base = detectBase(data);
+    document.getElementById("skillhub-link").href = base + "/#dsh-plugins";
+    document.getElementById("registry-url").textContent = base;
+
+    var names = Object.keys(data.plugins || {});
+    if (!names.length) {
+      app.innerHTML = '<div class="card"><p>仓库为空。打开首页「DSH 插件市场」，' +
+        '用网站账号登录后点「+ 发布」选择 DSH 插件上传 .tgz，或由管理员执行 ' +
+        '<code>publish-plugin.sh publish &lt;file.tgz&gt;</code>。</p></div>';
+      return;
+    }
+    var selected = (data.plugins[data.recommended] ? data.recommended : names[0]);
+
+    var selector = names.map(function (n) {
+      return '<option value="' + esc(n) + '"' + (n === selected ? " selected" : "") + ">" + esc(n) + "</option>";
+    }).join("");
+
+    app.innerHTML =
+      '<div class="card">' +
+        '<h2>插件安装</h2>' +
+        '<div class="row">' +
+          '<label for="pkg">插件包</label>' +
+          '<select id="pkg">' + selector + "</select>" +
+          '<label for="ver">版本</label><select id="ver"></select>' +
+          '<label for="profile">Profile</label>' +
+          '<input type="text" id="profile" value="web" style="min-width:110px">' +
+        "</div>" +
+        '<pre id="cmd">—</pre>' +
+        '<div class="row" style="margin:12px 0 0">' +
+          '<button id="copy">复制安装命令</button>' +
+          '<button class="ghost" id="copy-reg">复制 Registry 地址</button>' +
+          '<span class="note" id="sha">—</span>' +
+        "</div>" +
+      "</div>" +
+      '<div class="card">' +
+        '<h2>版本清单</h2>' +
+        '<div class="kv" id="meta"></div>' +
+        '<table><thead><tr><th>版本</th><th>发布时间</th><th>大小</th><th>SHA256 / 说明</th></tr></thead>' +
+        '<tbody id="rows"></tbody></table>' +
+      "</div>";
+    document.getElementById("steps").hidden = false;
+
+    var pkgSel = document.getElementById("pkg");
+    var verSel = document.getElementById("ver");
+    var profile = document.getElementById("profile");
+    var cmdEl = document.getElementById("cmd");
+    var shaEl = document.getElementById("sha");
+
+    function versionRows(pkg) {
+      var versions = (pkg.versions || []).slice().sort(function (a, b) {
+        return String(b.version).localeCompare(String(a.version), undefined, { numeric: true });
+      });
+      document.getElementById("rows").innerHTML = versions.map(function (v) {
+        var flags = "";
+        if (v.version === pkg.latest) flags += '<span class="tag">推荐</span>';
+        if (v.yanked) flags += '<span class="tag off">已撤回</span>';
+        return "<tr><td><strong>" + esc(v.version) + "</strong>" + flags + "</td>" +
+          "<td>" + esc(String(v.publishedAt || "").slice(0, 10)) + "</td>" +
+          "<td>" + esc((v.size / 1024).toFixed(0) + " KB") + "</td>" +
+          '<td><div class="hash">' + esc(v.sha256) + "</div>" +
+          (v.notes ? '<div class="note">' + esc(v.notes) + "</div>" : "") +
+          (v.compatNote ? '<div class="note">兼容：' + esc(v.compatNote) + "</div>" : "") +
+          "</td></tr>";
+      }).join("");
+      document.getElementById("meta").innerHTML =
+        "<dt>包名</dt><dd>" + esc(data.plugins[pkgSel.value].name || pkgSel.value) + "</dd>" +
+        "<dt>简介</dt><dd>" + esc(pkg.description || "—") + "</dd>" +
+        "<dt>许可</dt><dd>" + esc(pkg.license || "—") + "</dd>" +
+        "<dt>Registry</dt><dd>" + esc(base) + "</dd>";
+      return versions;
+    }
+
+    function refreshVersions() {
+      var pkg = data.plugins[pkgSel.value];
+      var versions = (pkg.versions || []).slice().sort(function (a, b) {
+        return String(b.version).localeCompare(String(a.version), undefined, { numeric: true });
+      });
+      verSel.innerHTML = versions.map(function (v) {
+        return '<option value="' + esc(v.version) + '"' +
+          (v.version === pkg.latest ? " selected" : "") + ">" +
+          esc(v.version) + (v.version === pkg.latest ? "（推荐）" : "") +
+          (v.yanked ? "（已撤回）" : "") + "</option>";
+      }).join("");
+      versionRows(pkg);
+      refreshCmd();
+    }
+
+    function currentEntry() {
+      var pkg = data.plugins[pkgSel.value];
+      return (pkg.versions || []).filter(function (v) { return v.version === verSel.value; })[0];
+    }
+
+    function refreshCmd() {
+      var entry = currentEntry();
+      if (!entry) { cmdEl.textContent = "没有可用版本"; return; }
+      cmdEl.textContent = "dsh plugin --profile " + (profile.value || "web") +
+        " add " + tarballUrl(base, entry.file) + " --ignore-scripts";
+      shaEl.textContent = "SHA256 " + String(entry.sha256).slice(0, 16) + "…";
+    }
+
+    pkgSel.addEventListener("change", refreshVersions);
+    verSel.addEventListener("change", refreshCmd);
+    profile.addEventListener("input", refreshCmd);
+    document.getElementById("copy").addEventListener("click", function () {
+      copyText(cmdEl.textContent, this);
+    });
+    document.getElementById("copy-reg").addEventListener("click", function () {
+      copyText(base, this);
+    });
+
+    refreshVersions();
+  }
+})();
+</script>
+</body>
+</html>
