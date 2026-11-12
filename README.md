@@ -46,6 +46,88 @@ firewall, with the same polish you'd expect from a public registry.
 
 > ⭐ If SkillHub fits your team, **star** the repo to help other teams find it, and **Watch → Custom → Releases** to get notified when a new version ships.
 
+> **Customized deployment fork**
+>
+> This repository is a fork of [iflytek/skillhub](https://github.com/iflytek/skillhub).
+> The default branch `docker-current` contains the code that runs in the
+> customized Docker deployment. The upstream `main` branch is kept intact for
+> future synchronization and upstream contributions.
+
+## Fork Additions
+
+This fork extends SkillHub with an internal AI portal, MCP server publishing,
+AI tool distribution and an offline-friendly LAN deployment layer.
+
+### Internal AI portal
+
+- Customizable homepage with announcement, hero copy and selected AI
+  application entries.
+- Dedicated `/apps` AI application catalog with categories, search and
+  administrator-managed sections.
+- `/dashboard/pages` page settings for:
+  - site display name
+  - page titles and descriptions
+  - top navigation tab labels
+- Site name is front-end only and does not change APIs, CLI, packages or database
+  names.
+- Homepage, AI applications, page headers and help content are managed through
+  nginx WebDAV files, so publishing does not require a container restart.
+
+### AI tools
+
+- `/tools` catalog and `/tools/{id}` detail/download pages.
+- Administrators can upload EXE, MSI, ZIP, installers and other packages with
+  category, summary and usage instructions.
+- Uploads use CSRF-safe requests and no longer have a fixed 100 MB limit.
+- File metadata includes checksum, size and download count.
+
+### MCP server registry
+
+- `/mcp` public catalog and `/mcp/{slug}` detail page.
+- Signed-in users can publish MCP servers in three forms:
+  - remote **Streamable HTTP** or **SSE** endpoint
+  - local **stdio** command/package (npm, PyPI, Docker or custom)
+  - pasted single-server or `{"mcpServers": {...}}` JSON configuration
+- `/dashboard/mcp/publish` publish form and `/dashboard/mcp` **My MCP** page.
+- Users can edit or delete their own servers; super administrators can manage
+  all servers.
+- Optional attachment package upload for scripts/configuration needed by the
+  server. Other users can download the attachment from the detail page.
+- Detail pages generate copy-ready `mcpServers` JSON for Claude Desktop, DSH and
+  other MCP clients.
+- See [MCP servers](./docs/mcp-servers.md).
+
+### DSH plugin hosting
+
+- Native DSH plugin repository at `/plugins` and `/dashboard/plugins`.
+- Publish, version, recommend, yank and download plugin tarballs.
+- Existing static `/dsh-plugins/` compatibility repository remains available
+  for older installs.
+- See [DSH plugin hosting](./docs/dsh-plugin-hosting.md).
+
+### Learning and help
+
+- `/help` searchable knowledge base.
+- Administrators create, preview, publish and delete Markdown articles from
+  `/dashboard/help`.
+
+### LAN deployment and migration
+
+The `deploy/lan/` overlay adds:
+
+- `run.sh` / `stop.sh` one-command startup and shutdown
+- offline Docker image export/import
+- automatic API port fallback when `8080` is already in use
+- nginx site customization, plugin repository and WebDAV content management
+- PostgreSQL and object-storage migration scripts
+- `deploy/lan/migration/restore.sh` for restoring a packaged database and
+  skill/tool/MCP attachment storage
+
+Runtime credentials, database dumps, object storage and image tarballs are
+intentionally excluded from Git. See
+[LAN deployment](./deploy/lan/README.md) and
+[migration guide](./deploy/lan/migration/README.md).
+
 ## Share Great Skills
 
 Great Skills become more valuable when they are shared. If you have a Skill that has

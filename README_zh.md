@@ -35,6 +35,72 @@ SkillHub 是一个自托管平台，为团队提供私有的、受治理的智�
 
 > ⭐ 如果 SkillHub 适合你的团队，欢迎 **Star** 本仓库帮助更多团队发现它；点 **Watch → Custom → Releases** 可在新版本发布时收到通知。
 
+> **定制部署分支**
+>
+> 本仓库是 [iflytek/skillhub](https://github.com/iflytek/skillhub) 的 fork。
+> 默认分支 `docker-current` 是当前定制 Docker 部署实际运行的代码；上游 `main`
+> 保持完整，便于后续同步和向上游提交。
+
+## 本 Fork 的修改与新增功能
+
+### 内部 AI 门户
+
+- 可自定义公告、Hero 和精选 AI 应用入口的首页。
+- 独立的 `/apps` AI 应用页，支持分类、搜索和管理员维护区块。
+- `/dashboard/pages` 页面设置：
+  - 网站显示名称
+  - 页面标题与描述
+  - 顶部导航标签名称
+- 网站名称仅影响前端展示，不改变 API、CLI、安装包或数据库名称。
+- 首页、AI 应用、页面标题和帮助内容通过 nginx WebDAV 文件管理，发布无需重启容器。
+
+### AI 工具
+
+- `/tools` 工具列表和 `/tools/{id}` 详情/下载页。
+- 管理员可上传 EXE、MSI、ZIP、安装包等文件，并填写分类、简介和使用说明。
+- 上传使用 CSRF 安全请求，不再有固定 100 MB 限制。
+- 文件包含校验和、大小和下载次数。
+
+### MCP 服务
+
+- `/mcp` 公共列表和 `/mcp/{slug}` 详情页。
+- 登录用户可以使用三种方式发布：
+  - 远程 **Streamable HTTP** 或 **SSE** 地址
+  - 本地 **stdio** 命令/包（npm、PyPI、Docker 或自定义）
+  - 粘贴单个服务或 `{"mcpServers": {...}}` JSON 配置
+- `/dashboard/mcp/publish` 发布页和 `/dashboard/mcp`「我的 MCP」管理页。
+- 发布者可编辑、删除自己的服务；超级管理员可管理全部服务。
+- 支持上传服务所需的附件包，其他用户可在详情页下载。
+- 详情页生成可直接复制的 `mcpServers` 配置。
+- 见 [MCP 服务](./docs/mcp-servers.md)。
+
+### DSH 插件托管
+
+- `/plugins` 和 `/dashboard/plugins` 原生插件市场。
+- 支持发布、版本、推荐、下架和下载插件 tarball。
+- 保留 `/dsh-plugins/` 静态兼容仓库，旧安装地址继续可用。
+- 见 [DSH 插件托管](./docs/dsh-plugin-hosting.md)。
+
+### 学习与帮助
+
+- `/help` 可搜索帮助中心。
+- 管理员在 `/dashboard/help` 创建、预览、发布和删除 Markdown 文章。
+
+### 局域网部署与迁移
+
+`deploy/lan/` 增加：
+
+- `run.sh` / `stop.sh` 一键启动和停止
+- 离线 Docker 镜像导入/导出
+- 8080 被占用时自动选择可用 API 端口
+- nginx 站点定制、插件仓库和 WebDAV 内容管理
+- PostgreSQL 与对象存储迁移脚本
+- `deploy/lan/migration/restore.sh` 恢复数据库和技能/工具/MCP 附件存储
+
+运行时凭据、数据库 dump、对象存储和镜像 tar 不进入 Git。见
+[局域网部署](./deploy/lan/README.md) 和
+[迁移指南](./deploy/lan/migration/README.md)。
+
 ## 分享优秀 Skill
 
 优秀的 Skill 在分享中产生更大价值。如果你有一个在真实工作或生活场景中反复打磨、确实好用的
@@ -66,8 +132,8 @@ Skill，欢迎分享给 SkillHub 社区，与大家一起丰富开放、实用�
 - **DSH 插件托管** — 像技能一样发布、版本化和分发 DeepSeek Harness 插件 tarball，
   复用命名空间、归属和审计模型。见 [DSH 插件托管](./docs/dsh-plugin-hosting.md)。
 - **内部 AI 门户** — 可自定义公告与 Hero、精选 AI 应用入口的首页，独立的 AI 应用页面，所有功能入口集中在顶部标签。
-- **MCP 服务注册表** — 登录用户可发布远程 HTTP/SSE、stdio 命令/包或粘贴客户端 JSON，详情页提供可直接复制的 `mcpServers` 配置。
-  见 [门户首页](./docs/portal-home.md)。
+- **MCP 服务注册表** — 登录用户可发布远程 HTTP/SSE、stdio 命令/包或粘贴客户端 JSON，支持附件包上传/下载与「我的 MCP」管理，详情页提供可直接复制的 `mcpServers` 配置。
+  见 [MCP 服务](./docs/mcp-servers.md)。
 - **AI 工具下载** — 管理员上传工具文件并填写分类、简介与使用说明，成员可浏览和下载。
   见 [AI 工具下载](./docs/ai-tools.md)。
 - **可插拔存储** — 开发环境使用本地文件系统，生产环境使用 S3 / MinIO。通过配置切换。
